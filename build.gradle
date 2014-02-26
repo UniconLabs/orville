@@ -1,9 +1,14 @@
-apply plugin: "groovy"
+allprojects {
+    apply plugin: "groovy"
 
-dependencies {
-    compile "org.codehaus.groovy:groovy-all:${project."groovy.version"}"
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${project."groovy.version"}"
+    }
 }
-
 task wrapper(type: Wrapper) {
     gradleVersion = project."gradle.version"
 }
