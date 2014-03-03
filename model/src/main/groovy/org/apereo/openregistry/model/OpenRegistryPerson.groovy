@@ -1,5 +1,5 @@
 package org.apereo.openregistry.model
 
-class OpenRegistryPerson {
+class OpenRegistryPerson extends Person {
     Set<SystemOfRecordPerson> systemOfRecordPersons
 }
