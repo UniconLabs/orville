@@ -11,5 +11,5 @@ class Name {
 }
 
 enum NameType {
-
+    FORMAL, ALIAS, NICKNAME, ALSO_KNOWN_AS, FORMERLY_KNOWN_AS
 }
