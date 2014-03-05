@@ -1,4 +1,9 @@
+description = 'Open Registry 2'
+
 allprojects {
+    group = 'org.apereo.openregistry'
+    version = project.version
+
     apply plugin: "groovy"
 
     repositories {
