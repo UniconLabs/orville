@@ -8,4 +8,6 @@ import org.apereo.openregistry.model.SystemOfRecordPerson
  */
 public interface SystemOfRecordPersonFactory {
 
+    SystemOfRecordPerson createFrom(Map<Object, Object> systemOfRecordPersonData)
+
 }
