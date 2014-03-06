@@ -24,10 +24,20 @@ interface Processor {
     ProcessorContext process(ProcessorContext processorContext) throws ProcessorException
 }
 
+abstract class IdempotentProcessor implements Processor {
+    @Override
+    ProcessorContext process(ProcessorContext processorContext) throws ProcessorException {
+        processorContext.processors.contains(this.class) ? processorContext : doProcess(processorContext)
+    }
+
+    abstract ProcessorContext doProcess(ProcessorContext processorContext) throws ProcessorException
+}
+
 class ProcessorContext {
     Object request
     SystemOfRecordPerson systemOfRecordPerson
     OpenRegistryPerson openRegistryPerson
+    Set<Class> processors
 }
 
 @InheritConstructors
