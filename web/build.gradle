@@ -1,3 +1,15 @@
+apply plugin: 'spring-boot'
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${project."spring-boot.version"}")
+    }
+}
+
 repositories {
     maven { url 'http://repo.spring.io/milestone' }
 }
@@ -5,5 +17,9 @@ repositories {
 dependencies {
     compile project(":model")
     compile project(":service")
-    compile("org.springframework.boot:spring-boot-starter-web:${project."spring-boot.version"}")
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    //This actuator gives all kinds of Boot goodness like metrics, info, beans info, health check, etc. via exposed RESTful
+    //endpoints returning JSON data. Usuful during development or perhaps even in production
+    compile("org.springframework.boot:spring-boot-starter-actuator")
 }
