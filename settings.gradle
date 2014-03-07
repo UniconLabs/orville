@@ -2,4 +2,4 @@ rootProject.name = 'openregistry-x' // as in open registry ne(x)t
 
 include "model"
 include "service"
-include "repository"
+include "web"

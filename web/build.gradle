@@ -1,0 +1,9 @@
+repositories {
+    maven { url 'http://repo.spring.io/milestone' }
+}
+
+dependencies {
+    compile project(":model")
+    compile project(":service")
+    compile("org.springframework.boot:spring-boot-starter-web:${project."spring-boot.version"}")
+}
