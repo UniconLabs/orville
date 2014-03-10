@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1")
 class OpenRegistrySystemOfRecordDataResource {
 
+    //Injected from openregistry.properties or if not present uses the default value defined inline (after the (:) colon token)
     @Value("\${openregistry.version:2.0-M1-SNAPSHOT}")
     private orVersion
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}")
     @ResponseBody
-    String createOrUpdatePerson(@PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
+    def createOrUpdatePerson(@PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
         //The presence of @ResponseBody and Jackson Message Converter that Boot adds to the classpath
-        //will cause this Map to serialized as a JSON blob on the client side!
+        //will cause this Map to serialized as a JSON blob (application/json Content-Type) on the client side!
         [openRegistryVersion: this.orVersion,
                 personCreated: [sor: sor, sorPerson: personSorId]]
     }
