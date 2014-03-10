@@ -23,3 +23,7 @@ dependencies {
     //endpoints returning JSON data. Usuful during development or perhaps even in production
     compile("org.springframework.boot:spring-boot-starter-actuator")
 }
+
+jar {
+    baseName = 'openregistry-web'
+}

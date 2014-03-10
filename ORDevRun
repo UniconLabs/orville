@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#Just for convenience during development - with externalized config properties
+gradle clean build; java -jar web/build/libs/openregistry-web-2.0.0-M1.jar --spring.config.location=file:/etc/openregistry/config/openregistry.properties

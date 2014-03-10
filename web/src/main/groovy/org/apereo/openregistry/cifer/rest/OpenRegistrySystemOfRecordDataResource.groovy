@@ -1,5 +1,6 @@
 package org.apereo.openregistry.cifer.rest
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1")
 class OpenRegistrySystemOfRecordDataResource {
+
+    @Value("\${openregistry.version}")
+    private orVersion
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}")
     String createOrUpdatePerson(@PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
