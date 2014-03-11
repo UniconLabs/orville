@@ -7,11 +7,11 @@ class EmailAddress {
     String address
     EmailAddressType type
     boolean verified
-}
 
-/**
- * Enum of email types
- */
-enum EmailAddressType {
-    CAMPUS, PERSONAL
+    /**
+     * Enum of email types
+     */
+    static enum EmailAddressType {
+        CAMPUS, PERSONAL
+    }
 }
