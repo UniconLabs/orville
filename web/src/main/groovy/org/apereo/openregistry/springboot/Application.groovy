@@ -22,7 +22,6 @@ class Application extends SpringBootServletInitializer {
     private static applicationClass = Application
 
     public static void main(String[] args) {
-        //def ar = ['spring.config.location=/etc/openregistry/config/openregistry.properties']
         SpringApplication.run(applicationClass, args)
     }
 
