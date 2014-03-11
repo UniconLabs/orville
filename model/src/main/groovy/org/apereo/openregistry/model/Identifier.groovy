@@ -3,8 +3,8 @@ package org.apereo.openregistry.model
 class Identifier {
     IdentifierType identifierType
     IdentifierStatus identifierStatus
-}
 
-enum IdentifierType {}
-enum IdentifierStatus {}
+    static enum IdentifierType {}
+    static enum IdentifierStatus {}
+}
 

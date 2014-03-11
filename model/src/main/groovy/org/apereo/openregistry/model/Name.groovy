@@ -11,11 +11,11 @@ class Name {
     String suffix
     NameType type
     String language
-}
 
-/**
- * Enum of name types
- */
-enum NameType {
-    FORMAL, ALIAS, NICKNAME, ALSO_KNOWN_AS, FORMERLY_KNOWN_AS
+    /**
+     * Enum of name types
+     */
+    static enum NameType {
+        FORMAL, ALIAS, NICKNAME, ALSO_KNOWN_AS, FORMERLY_KNOWN_AS
+    }
 }
