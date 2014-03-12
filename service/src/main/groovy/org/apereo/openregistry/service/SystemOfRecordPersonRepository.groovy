@@ -11,8 +11,8 @@ public interface SystemOfRecordPersonRepository {
     /**
      * Find a {@link SystemOfRecordPerson} for a given SOR and SOR_ID
      * @param sor
-     * @param sorId
+     * @param personSorId
      * @return a valid person object or null if not found
      */
-    SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordId(String sor, String sorId)
+    SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordId(String sor, String personSorId)
 }

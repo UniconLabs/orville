@@ -1,15 +1,20 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.model.SystemOfRecordPersonNotFoundException
+import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -28,19 +33,30 @@ class OpenRegistrySystemOfRecordDataResource {
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
 
+    @Autowired
     private SystemOfRecordPersonRepository systemOfRecordPersonRepository
 
-
+    private OpenRegistryProcessor openRegistryProcessor
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
     def updateSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
-        log.info("Spring Boot has injected [${this.systemOfRecordPersonFactory}")
-        log.info("The submitted SOR data JSON blob: $sorData")
-        //The presence of @RestController as a type-level annotation and Jackson Message Converter that Boot adds to the classpath
-        //will cause this Map to serialized as a JSON blob (application/json Content-Type) on the client side!
-        [openRegistryVersion: this.orVersion,
-                personCreated: [sor: sor, sorPerson: personSorId]]
+
+        def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordId(sor, personSorId)
+        if(!sorPerson) {
+            log.warn("An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]")
+            throw new SystemOfRecordPersonNotFoundException()
+        }
+
+
+        //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
+
+    }
+
+    @ExceptionHandler(SystemOfRecordPersonNotFoundException)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "System Of Record person not found")
+    void personNotFoundHandler() {
     }
 }

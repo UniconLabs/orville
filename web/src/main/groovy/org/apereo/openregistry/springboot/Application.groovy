@@ -2,6 +2,7 @@ package org.apereo.openregistry.springboot
 
 import org.apereo.openregistry.model.SystemOfRecordPerson
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
+import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
@@ -49,6 +50,19 @@ class Application extends SpringBootServletInitializer {
             @Override
             String toString() {
                 "Mock SystemOfRecordPersonFactory"
+            }
+        }
+    }
+
+    @Bean
+    SystemOfRecordPersonRepository systemOfRecordPersonRepository() {
+        //Just for initial Boot's testing at the beginning of
+        //development. Will be replaced with real implementation later...
+        new SystemOfRecordPersonRepository() {
+
+            @Override
+            SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordId(String sor, String personSorId) {
+                null
             }
         }
     }

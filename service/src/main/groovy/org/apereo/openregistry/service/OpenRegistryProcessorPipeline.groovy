@@ -41,4 +41,4 @@ class OpenRegistryProcessorContext {
 }
 
 @InheritConstructors
-class OpenRegistryProcessorException extends Exception {}
+class OpenRegistryProcessorException extends RuntimeException {}
