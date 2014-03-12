@@ -2,6 +2,7 @@ package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.service.OpenRegistryProcessor
+import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,8 +53,8 @@ class OpenRegistrySystemOfRecordDataResource {
             return new ResponseEntity<String>(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
+        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(systemOfRecordPerson: sorPerson))
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
-
     }
 }
