@@ -2,6 +2,7 @@ package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
+import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -27,6 +27,10 @@ class OpenRegistrySystemOfRecordDataResource {
 
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
+
+    private SystemOfRecordPersonRepository systemOfRecordPersonRepository
+
+
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     def updateSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
