@@ -1,7 +1,6 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
-import org.apereo.openregistry.model.SystemOfRecordPersonNotFoundException
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -44,19 +43,17 @@ class OpenRegistrySystemOfRecordDataResource {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
 
+        //throw new OpenRegistryProcessorException("SOR [$sor]")
+
         def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordId(sor, personSorId)
         if(!sorPerson) {
-            log.warn("An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]")
-            throw new SystemOfRecordPersonNotFoundException()
+            def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
+            log.warn(msg)
+            return new ResponseEntity<String>(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
 
-    }
-
-    @ExceptionHandler(SystemOfRecordPersonNotFoundException)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "System Of Record person not found")
-    void personNotFoundHandler() {
     }
 }
