@@ -48,7 +48,7 @@ class OpenRegistrySystemOfRecordDataResource {
             return new ResponseEntity<String>(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
-        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(systemOfRecordPerson: sorPerson))
+        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: sorData, systemOfRecordPerson: sorPerson))
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
     }
