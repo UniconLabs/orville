@@ -4,7 +4,9 @@ import groovy.util.logging.Slf4j
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
@@ -26,13 +28,13 @@ class OpenRegistrySystemOfRecordDataResource {
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}")
-    @ResponseBody
-    def createOrUpdatePerson(@PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    def updateSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
         log.info("Spring Boot has injected [${this.systemOfRecordPersonFactory}")
-        //The presence of @ResponseBody and Jackson Message Converter that Boot adds to the classpath
+        log.info("The submitted SOR data JSON blob: $sorData")
+        //The presence of @RestController as a type-level annotation and Jackson Message Converter that Boot adds to the classpath
         //will cause this Map to serialized as a JSON blob (application/json Content-Type) on the client side!
         [openRegistryVersion: this.orVersion,
                 personCreated: [sor: sor, sorPerson: personSorId]]
