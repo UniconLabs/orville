@@ -25,11 +25,6 @@ import org.springframework.web.bind.annotation.RestController
 @Slf4j
 class OpenRegistrySystemOfRecordDataResource {
 
-    //Injected from openregistry.properties or if not present uses the default value defined inline (after the (:) colon token)
-    //This is here just to test Boot's capabilities in the initial stages of development. Will be removed later...
-    @Value("\${openregistry.version:2.0-M1-SNAPSHOT}")
-    private orVersion
-
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
 
