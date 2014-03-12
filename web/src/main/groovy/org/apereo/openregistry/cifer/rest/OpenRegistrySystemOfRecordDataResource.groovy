@@ -33,9 +33,11 @@ class OpenRegistrySystemOfRecordDataResource {
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
 
+    //TODO: Currently a noop mock impl is wired in. Need a real impl
     @Autowired
     private SystemOfRecordPersonRepository systemOfRecordPersonRepository
 
+    //TODO: Not wired in at the moment. Need an impl. and @Bean definition method in Application class
     private OpenRegistryProcessor openRegistryProcessor
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -43,8 +45,6 @@ class OpenRegistrySystemOfRecordDataResource {
     def updateSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
-
-        //throw new OpenRegistryProcessorException("SOR [$sor]")
 
         def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordId(sor, personSorId)
         if(!sorPerson) {
