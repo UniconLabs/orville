@@ -39,6 +39,7 @@ class OpenRegistrySystemOfRecordDataResource {
     def updateSorPerson(
             @RequestBody Map<String, Object> sorData,
             @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
+
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
 
@@ -52,5 +53,23 @@ class OpenRegistrySystemOfRecordDataResource {
         this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorData, action: 'update'], systemOfRecordPerson: sorPerson))
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    def createSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor) {
+
+        OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorData, sor: sor, action: 'add']))
+        switch (processorCtx.outcome.idMatchType) {
+            case 'OK':
+                return new ResponseEntity(HttpStatus.OK)
+            case 'CREATED':
+                return new ResponseEntity<Map<String, Object>>(processorCtx.outcome.body, HttpStatus.CREATED)
+            case 'MULTIPLE_CHOICES':
+                return new ResponseEntity<Map<String, Object>>(processorCtx.outcome.body, HttpStatus.MULTIPLE_CHOICES)
+            default:
+                //TODO: what do we do here? Is 500 OK?
+                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+
+        }
     }
 }
