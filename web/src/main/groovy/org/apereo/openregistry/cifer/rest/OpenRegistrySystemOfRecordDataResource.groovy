@@ -37,7 +37,7 @@ class OpenRegistrySystemOfRecordDataResource {
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     def updateSorPerson(
-            @RequestBody Map<String, Object> sorData,
+            @RequestBody Map<String, Object> sorRequestData,
             @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
 
         //TODO: figure out Boot's logback config for app level logging levels
@@ -47,10 +47,10 @@ class OpenRegistrySystemOfRecordDataResource {
         if (!sorPerson) {
             def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
             log.warn(msg)
-            return new ResponseEntity<String>(msg.toString(), HttpStatus.NOT_FOUND)
+            return new ResponseEntity(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
-        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorData, action: 'update'], systemOfRecordPerson: sorPerson))
+        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorRequestData, action: 'update'], systemOfRecordPerson: sorPerson))
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
     }
@@ -63,9 +63,11 @@ class OpenRegistrySystemOfRecordDataResource {
             case 'OK':
                 return new ResponseEntity(HttpStatus.OK)
             case 'CREATED':
-                return new ResponseEntity<Map<String, Object>>(processorCtx.outcome.body, HttpStatus.CREATED)
+                //outcome.body is a Map
+                return new ResponseEntity(processorCtx.outcome.body, HttpStatus.CREATED)
             case 'MULTIPLE_CHOICES':
-                return new ResponseEntity<Map<String, Object>>(processorCtx.outcome.body, HttpStatus.MULTIPLE_CHOICES)
+                //outcome.body is a Map
+                return new ResponseEntity(processorCtx.outcome.body, HttpStatus.MULTIPLE_CHOICES)
             default:
                 //TODO: what do we do here? Is 500 OK?
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
