@@ -7,10 +7,15 @@ package org.apereo.openregistry.model
 class Role {
     Entity sponsor
     String title
-    int percentTime
+    int percentTime = 100
     Affiliation affiliation
     Termination termination
 
+    static constraints = {
+        termination nullable: true
+    }
+
+    @grails.persistence.Entity
     static class Affiliation {
         Date date
         AffiliationType type
@@ -18,6 +23,7 @@ class Role {
         static enum AffiliationType {}
     }
 
+    @grails.persistence.Entity
     static class Termination {
         Date date
         TerminationType type

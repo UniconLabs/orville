@@ -3,10 +3,14 @@ package org.apereo.openregistry.model
 @grails.persistence.Entity
 class Person extends Entity {
     Date dateOfBirth
-    Gender gender
-    Set<EmailAddress> emailAddresses
-    Set<Name> names
-    Set<Role> roles
+    Gender gender = Gender.UNDISCLOSED
+    Set<EmailAddress> emailAddresses = [] as Set<EmailAddress>
+    Set<Name> names = [] as Set<Name>
+    Set<Role> roles = [] as Set<Role>
+
+    static constraints = {
+        dateOfBirth nullable: true
+    }
 
     /**
      * Enum representing genders. This list of genders was gathered from multiple sources including Wikipedia(R) and
