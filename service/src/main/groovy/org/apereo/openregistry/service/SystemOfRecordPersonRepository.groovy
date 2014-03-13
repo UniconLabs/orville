@@ -14,5 +14,5 @@ public interface SystemOfRecordPersonRepository {
      * @param personSorId
      * @return a valid person object or null if not found
      */
-    SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordId(String sor, String personSorId)
+    SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordPersonId(String sor, String personSorId)
 }

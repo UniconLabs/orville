@@ -6,7 +6,6 @@ import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.apereo.openregistry.service.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -37,18 +36,20 @@ class OpenRegistrySystemOfRecordDataResource {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    def updateSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
+    def updateSorPerson(
+            @RequestBody Map<String, Object> sorData,
+            @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
 
-        def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordId(sor, personSorId)
-        if(!sorPerson) {
+        def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordPersonId(sor, personSorId)
+        if (!sorPerson) {
             def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
             log.warn(msg)
             return new ResponseEntity<String>(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
-        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: sorData, systemOfRecordPerson: sorPerson))
+        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorData, action: 'update'], systemOfRecordPerson: sorPerson))
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
     }

@@ -61,7 +61,7 @@ class Application extends SpringBootServletInitializer {
         new SystemOfRecordPersonRepository() {
 
             @Override
-            SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordId(String sor, String personSorId) {
+            SystemOfRecordPerson findBySystemOfRecordAndSystemOfRecordPersonId(String sor, String personSorId) {
                 null
             }
         }
