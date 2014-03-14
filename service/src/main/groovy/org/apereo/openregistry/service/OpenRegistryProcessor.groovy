@@ -6,4 +6,5 @@ package org.apereo.openregistry.service
  */
 public interface OpenRegistryProcessor {
 
+    OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext)
 }
