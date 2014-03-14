@@ -1,10 +1,10 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.service.standardization.SystemOfRecordPersonFactory
+import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
-import org.apereo.openregistry.service.SystemOfRecordPersonFactory
-import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

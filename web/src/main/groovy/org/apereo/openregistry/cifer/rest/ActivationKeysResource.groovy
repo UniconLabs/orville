@@ -2,7 +2,7 @@ package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.ActivationKey
-import org.apereo.openregistry.service.ActivationKeyService
+import org.apereo.openregistry.service.activation.ActivationKeyService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

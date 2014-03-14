@@ -1,4 +1,4 @@
-package org.apereo.openregistry.service
+package org.apereo.openregistry.service.activation
 
 import org.apereo.openregistry.model.ActivationKey
 

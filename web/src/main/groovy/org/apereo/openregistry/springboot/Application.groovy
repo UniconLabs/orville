@@ -1,7 +1,7 @@
 package org.apereo.openregistry.springboot
 
 import org.apereo.openregistry.model.SystemOfRecordPerson
-import org.apereo.openregistry.service.SystemOfRecordPersonFactory
+import org.apereo.openregistry.service.standardization.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

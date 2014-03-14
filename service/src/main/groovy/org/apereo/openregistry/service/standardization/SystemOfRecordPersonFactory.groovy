@@ -1,4 +1,4 @@
-package org.apereo.openregistry.service
+package org.apereo.openregistry.service.standardization
 
 import org.apereo.openregistry.model.SystemOfRecordPerson
 
