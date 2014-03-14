@@ -47,9 +47,6 @@ class OpenRegistrySystemOfRecordDataResource {
             log.warn(msg)
             return new ResponseEntity(msg.toString(), HttpStatus.NOT_FOUND)
         }
-
-
-
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
     }
 
