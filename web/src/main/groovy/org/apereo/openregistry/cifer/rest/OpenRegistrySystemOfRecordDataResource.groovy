@@ -27,10 +27,6 @@ class OpenRegistrySystemOfRecordDataResource {
     @Autowired
     private SystemOfRecordPersonFactory systemOfRecordPersonFactory
 
-    //TODO: Currently a noop mock impl is wired in. Need a real impl
-    @Autowired
-    private SystemOfRecordPersonRepository systemOfRecordPersonRepository
-
     //TODO: Not wired in at the moment. Need an impl. and @Bean definition method in Application class
     private OpenRegistryProcessor openRegistryProcessor
 
@@ -43,22 +39,24 @@ class OpenRegistrySystemOfRecordDataResource {
         //TODO: figure out Boot's logback config for app level logging levels
         log.debug("Calling PUT /sorPeople/* ...")
 
-        def sorPerson = this.systemOfRecordPersonRepository.findBySystemOfRecordAndSystemOfRecordPersonId(sor, personSorId)
-        if (!sorPerson) {
+        OpenRegistryProcessorContext processorContext = this.openRegistryProcessor.process(
+                new OpenRegistryProcessorContext(request: [body: sorRequestData, sor: sor, personSorId: personSorId, action: 'update']))
+
+        if (processorContext.outcome.personNotFound) {
             def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
             log.warn(msg)
             return new ResponseEntity(msg.toString(), HttpStatus.NOT_FOUND)
         }
 
-        this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorRequestData, action: 'update'], systemOfRecordPerson: sorPerson))
+
 
         //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    def createSorPerson(@RequestBody Map<String, Object> sorData, @PathVariable("sor") String sor) {
+    def createSorPerson(@RequestBody Map<String, Object> sorRequestData, @PathVariable("sor") String sor) {
 
-        OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorData, sor: sor, action: 'add']))
+        OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorRequestData, sor: sor, action: 'add']))
         switch (processorCtx.outcome.idMatchType) {
             case 'OK':
                 return new ResponseEntity(HttpStatus.OK)
