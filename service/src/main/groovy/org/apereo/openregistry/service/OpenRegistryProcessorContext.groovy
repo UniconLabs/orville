@@ -2,6 +2,7 @@ package org.apereo.openregistry.service
 
 import org.apereo.openregistry.model.OpenRegistryPerson
 import org.apereo.openregistry.model.SystemOfRecordPerson
+import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 
 /**
  *
@@ -9,7 +10,7 @@ import org.apereo.openregistry.model.SystemOfRecordPerson
  */
 class OpenRegistryProcessorContext {
 
-    Object request
+    OpenRegistryProcessingRequest request
 
     Object outcome
 

@@ -1,6 +1,7 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 import org.apereo.openregistry.service.standardization.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.SystemOfRecordPersonRepository
 import org.apereo.openregistry.service.OpenRegistryProcessor
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+
+import static org.apereo.openregistry.model.request.OpenRegistryProcessingRequest.TYPE
 
 /**
  * A RESTful resource implementation to handle https://spaces.internet2.edu/display/cifer/SOR-Registry+Strawman+Write+API
@@ -40,7 +43,8 @@ class OpenRegistrySystemOfRecordDataResource {
         log.debug("Calling PUT /sorPeople/* ...")
 
         OpenRegistryProcessorContext processorContext = this.openRegistryProcessor.process(
-                new OpenRegistryProcessorContext(request: [body: sorRequestData, sor: sor, personSorId: personSorId, action: 'update']))
+                new OpenRegistryProcessorContext(request:
+                        new OpenRegistryProcessingRequest(sor: sor, sorPersonId: personSorId, body: sorRequestData, type: TYPE.update)))
 
         if (processorContext.outcome.personNotFound) {
             def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
@@ -53,7 +57,10 @@ class OpenRegistrySystemOfRecordDataResource {
     @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
     def createSorPerson(@RequestBody Map<String, Object> sorRequestData, @PathVariable("sor") String sor) {
 
-        OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(new OpenRegistryProcessorContext(request: [body: sorRequestData, sor: sor, action: 'add']))
+        OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(
+                new OpenRegistryProcessorContext(request:
+                        new OpenRegistryProcessingRequest(sor: sor, body: sorRequestData, type: TYPE.add)))
+
         switch (processorCtx.outcome.idMatchType) {
             case 'OK':
                 return new ResponseEntity(HttpStatus.OK)
