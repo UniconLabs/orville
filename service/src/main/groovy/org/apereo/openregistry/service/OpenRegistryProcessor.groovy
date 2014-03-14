@@ -2,7 +2,7 @@ package org.apereo.openregistry.service
 
 /**
  *
- * A main abstraction for Open Registry processing step
+ * A main abstraction for Open Registry processing engine
  */
 public interface OpenRegistryProcessor {
 
