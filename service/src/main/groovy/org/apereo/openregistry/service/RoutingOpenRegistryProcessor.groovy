@@ -41,7 +41,7 @@ class RoutingOpenRegistryProcessor implements OpenRegistryProcessor {
                 for(p in this.addPersonProcessingPipeline) {
                     ctx = p.process(processorContext)
                     if(ctx.outcome) {
-                        break;
+                        break
                     }
                 }
                 break;
@@ -49,10 +49,10 @@ class RoutingOpenRegistryProcessor implements OpenRegistryProcessor {
                 for(p in this.updatePersonProcessingPipeline) {
                     ctx = p.process(processorContext)
                     if(ctx.outcome) {
-                        break;
+                        break
                     }
                 }
-                break;
+                break
             default:
                 //TODO: for now just throw a Runtime exception for unknown request types.
                 throw new RuntimeException('Unknown processing request type.')
