@@ -35,20 +35,21 @@ class RoutingOpenRegistryProcessor implements OpenRegistryProcessor {
         //based on the new requirements
 
         def ctx = null
-        //TODO: perhaps think about refactoring those 2 identical loop bodies into a Closure of some sort
+        def processAndShouldStop = { OpenRegistryProcessor p ->
+            ctx = p.process(processorContext)
+            ctx.outcome != null
+        }
         switch(processorContext.request.type) {
             case TYPE.add:
                 for(p in this.addPersonProcessingPipeline) {
-                    ctx = p.process(processorContext)
-                    if(ctx.outcome) {
+                    if(processAndShouldStop(p)) {
                         break
                     }
                 }
                 break
             case TYPE.update:
                 for(p in this.updatePersonProcessingPipeline) {
-                    ctx = p.process(processorContext)
-                    if(ctx.outcome) {
+                    if(processAndShouldStop(p)) {
                         break
                     }
                 }
