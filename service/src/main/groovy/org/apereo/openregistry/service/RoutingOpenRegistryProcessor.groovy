@@ -44,7 +44,7 @@ class RoutingOpenRegistryProcessor implements OpenRegistryProcessor {
                         break
                     }
                 }
-                break;
+                break
             case TYPE.update:
                 for(p in this.updatePersonProcessingPipeline) {
                     ctx = p.process(processorContext)
