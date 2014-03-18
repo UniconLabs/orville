@@ -11,6 +11,8 @@ buildscript {
 
 apply plugin: "spring-boot"
 
+bootRepackage.enabled = false
+
 dependencies {
     compile("org.grails:gorm-hibernate4-spring-boot:1.0.0.M1")
 
