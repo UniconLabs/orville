@@ -2,10 +2,8 @@ package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
-import org.apereo.openregistry.service.standardization.SystemOfRecordPersonFactory
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -26,31 +24,16 @@ import static org.apereo.openregistry.model.request.OpenRegistryProcessingReques
 @Slf4j
 class OpenRegistrySystemOfRecordDataResource {
 
-    @Autowired
-    private SystemOfRecordPersonFactory systemOfRecordPersonFactory
-
     //TODO: Not wired in at the moment. Need an impl. and @Bean definition method in Application class
     private OpenRegistryProcessor openRegistryProcessor
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     def updateSorPerson(
             @RequestBody Map<String, Object> sorRequestData,
             @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
 
-        //TODO: figure out Boot's logback config for app level logging levels
-        log.debug("Calling PUT /sorPeople/* ...")
-
-        OpenRegistryProcessorContext processorContext = this.openRegistryProcessor.process(
-                new OpenRegistryProcessorContext(request:
-                        new OpenRegistryProcessingRequest(sor: sor, sorPersonId: personSorId, body: sorRequestData, type: TYPE.update)))
-
-        if (processorContext.outcome.personNotFound) {
-            def msg = "An SOR person is not found for the following SOR ID [$personSorId] and System Of Record [$sor]"
-            log.warn(msg)
-            return new ResponseEntity(msg.toString(), HttpStatus.NOT_FOUND)
-        }
-        //According to "specs" or requirement docs, there is no specific response body on HTTP 200. So not returning anything here
+        //TODO: implement when mode business requirements details are available. HTTP 501 (not implemented) for now...
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
