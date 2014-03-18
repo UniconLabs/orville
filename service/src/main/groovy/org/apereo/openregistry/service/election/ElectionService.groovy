@@ -4,7 +4,7 @@ package org.apereo.openregistry.service.election
  *
  * ???????
  */
-public interface SystemOfRecordPersonDataElectionService {
+public interface ElectionService {
 
     //TODO: what is this???
 

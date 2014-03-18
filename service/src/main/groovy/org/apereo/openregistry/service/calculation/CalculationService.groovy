@@ -8,7 +8,7 @@ import org.apereo.openregistry.model.SystemOfRecordPerson
  * Calculates and creates canonical {@link org.apereo.openregistry.model.OpenRegistryPerson}s from given
  * {@link org.apereo.openregistry.model.SystemOfRecordPerson}s
  */
-public interface CanonicalPersonCalculationService {
+public interface CalculationService {
 
     OpenRegistryPerson calculateCanonicalPersonFrom(SystemOfRecordPerson systemOfRecordPerson)
 }

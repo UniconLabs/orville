@@ -7,7 +7,7 @@ import groovy.transform.Immutable
  * Holds results of a validation service call
  */
 @Immutable
-class SystemOfRecordPersonValidationResult {
+class PersonValidationResult {
 
    boolean success
 

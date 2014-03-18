@@ -8,7 +8,7 @@ import org.apereo.openregistry.model.SystemOfRecordPerson
  *
  * Creates {@link org.apereo.openregistry.model.Identifier}s for canonical persons
  */
-public interface CanonicalPersonIdentifierService {
+public interface IdentifierService {
 
-    Identifier createIdentifierForCanonicalPerson(OpenRegistryPerson canonicalPerson, SystemOfRecordPerson systemOfRecordPerson)
+    Identifier createIdentifierForOpenRegistryPerson(OpenRegistryPerson canonicalPerson, SystemOfRecordPerson systemOfRecordPerson)
 }

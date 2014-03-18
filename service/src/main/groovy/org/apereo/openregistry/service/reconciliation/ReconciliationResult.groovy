@@ -7,7 +7,7 @@ import groovy.transform.Immutable
  * ????
  */
 @Immutable
-class CanonicalPersonReconciliationResult {
+class ReconciliationResult {
 
     //TODO: what is this?
 }
