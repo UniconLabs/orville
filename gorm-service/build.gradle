@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":gorm-model")
+    compile project(":service")
+}
