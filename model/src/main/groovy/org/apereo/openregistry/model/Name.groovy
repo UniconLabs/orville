@@ -16,6 +16,6 @@ class Name {
      * Enum of name types
      */
     static enum NameType {
-        FORMAL, ALIAS, NICKNAME, ALSO_KNOWN_AS, FORMERLY_KNOWN_AS
+        OFFICIAL, FORMAL, ALIAS, NICKNAME, ALSO_KNOWN_AS, FORMERLY_KNOWN_AS
     }
 }
