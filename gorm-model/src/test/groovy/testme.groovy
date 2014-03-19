@@ -18,12 +18,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 class TestController {
     @Bean
     DataSource dataSource() {
-        new JdbcDataSource().with {
-            it.URL = "jdbc:h2:/tmp/orville"
-            user = "sa"
-            password="sa"
-            return it
-        }
+        new JdbcDataSource(URL: "jdbc:h2:/tmp/orvile", user: "sa", password: "sa")
     }
     @RequestMapping(value = "/person/add", method = POST)
     ResponseEntity addPerson(String firstName) {
