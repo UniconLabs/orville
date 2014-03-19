@@ -16,7 +16,7 @@ class StandardizationProcessor implements OpenRegistryProcessor {
         log.info("Starting 'standardization' processing phase with [$processorContext]")
         //TODO implement....
         //As we will defer the impl of 'update' for later, the data available in processor context for 'add person' is:
-        //[sor -> a system of record name/id, body -> raw data in the form of Map<String, Object>, type -> ProcessorContext.TYPE.add]
+        //[request.sor -> a system of record name/id, request.body -> raw data in the form of Map<String, Object>, request.type -> ProcessorContext.TYPE.add]
         //Also the 'outcome' field (Object) in the ctx could be set to any non-null value to signal to a composite processor
         //mediating the overall processing pipeline, a stop in further processing of this request.
 
