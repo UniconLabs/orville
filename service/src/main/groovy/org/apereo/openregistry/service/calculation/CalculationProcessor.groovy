@@ -1,5 +1,6 @@
 package org.apereo.openregistry.service.calculation
 
+import groovy.util.logging.Slf4j
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 
@@ -7,6 +8,7 @@ import org.apereo.openregistry.service.OpenRegistryProcessorContext
  *
  * A processor implementation for calculation phase
  */
+@Slf4j
 class CalculationProcessor implements OpenRegistryProcessor {
 
     @Override

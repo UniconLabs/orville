@@ -1,6 +1,6 @@
 package org.apereo.openregistry.service
 
-import static org.apereo.openregistry.model.request.OpenRegistryProcessingRequest.TYPE
+import groovy.util.logging.Slf4j
 
 /**
  *
@@ -14,8 +14,8 @@ import static org.apereo.openregistry.model.request.OpenRegistryProcessingReques
  *
  * @author Dmitriy Kopylenko
  * @author Unicon inc.
- * @since 2.0
  */
+@Slf4j
 class CompositeOpenRegistryProcessor implements OpenRegistryProcessor {
 
     final Set<OpenRegistryProcessor> processingPipeline
@@ -26,13 +26,16 @@ class CompositeOpenRegistryProcessor implements OpenRegistryProcessor {
 
     @Override
     OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
+        log.debug("Processing request: {} with the following processing pipeline: {}", processorContext, this.processingPipeline)
         def ctx = null
         for (p in this.processingPipeline) {
             ctx = p.process(processorContext)
             if (ctx.outcome) {
-                break
+                log.info(" Processor '{}' set a non-null outcome signaling the end of processing. Returning processor context: {}", p, ctx)
+                return ctx
             }
         }
+        log.info("Reached the end of the processing pipeline, but no outcome has been set by any processor. Returning processor context: {}", ctx)
         return ctx
     }
 }
