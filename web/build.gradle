@@ -2,8 +2,9 @@ apply plugin: 'spring-boot'
 
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenLocal()
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url "http://repo.spring.io/release" }
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${project."spring-boot.version"}")
