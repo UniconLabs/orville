@@ -44,7 +44,7 @@ class Application extends SpringBootServletInitializer {
                         new ReconciliationProcessor(),
                         new CalculationProcessor(),
                         new IdentificationProcessor(),
-                        new MockOutcomeProcessor.AddPersonMockOutcome_200()] as LinkedHashSet
+                        new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
     }
