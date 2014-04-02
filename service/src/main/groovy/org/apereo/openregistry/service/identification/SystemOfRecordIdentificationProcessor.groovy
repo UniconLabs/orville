@@ -2,7 +2,6 @@ package org.apereo.openregistry.service.identification
 
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.Identifier
-import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import static org.apereo.openregistry.model.request.OpenRegistryProcessingRequest.TYPE
