@@ -23,6 +23,7 @@ class OpenRegistryProcessorContext {
      *
      * Any other free form entries are allowed which could be interpreted by specific clients that know about their structure
      */
+
     Map<String, Object> outcome = [body: null, isFrozen: false]
 
     SystemOfRecordPerson systemOfRecordPerson
