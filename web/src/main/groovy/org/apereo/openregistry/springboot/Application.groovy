@@ -5,7 +5,8 @@ import org.apereo.openregistry.service.MockOutcomeProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.calculation.CalculationProcessor
 import org.apereo.openregistry.service.election.ElectionProcessor
-import org.apereo.openregistry.service.identification.IdentificationProcessor
+import org.apereo.openregistry.service.identification.OpenRegistryIdentificationProcessor
+import org.apereo.openregistry.service.identification.SystemOfRecordIdentificationProcessor
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
 import org.springframework.boot.SpringApplication
@@ -40,10 +41,9 @@ class Application extends SpringBootServletInitializer {
     OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
         //TODO: these processors are not implemented yet. Also what is the correct order of them in the pipeline???
         def pipeline = [new StandardizationProcessor(),
-                        new ElectionProcessor(),
                         new ReconciliationProcessor(),
-                        new CalculationProcessor(),
-                        new IdentificationProcessor(),
+                        new SystemOfRecordIdentificationProcessor(),
+                        new OpenRegistryIdentificationProcessor(),
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)

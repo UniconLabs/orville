@@ -7,6 +7,7 @@ class Person extends Entity {
     Set<EmailAddress> emailAddresses = [] as Set<EmailAddress>
     Set<Name> names = [] as Set<Name>
     Set<Role> roles = [] as Set<Role>
+    Set<Identifier> identifiers = [] as Set<Identifier>
 
     static constraints = {
         dateOfBirth nullable: true

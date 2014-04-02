@@ -25,13 +25,13 @@ abstract class MockOutcomeProcessor {
         @Override
         OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
             log.debug("AddPersonMockOutcome_201 is executing...")
-            def createdBody = [referenceId: 'M225127891',
-                               identifiers: [
-                                       [identifier: 'GUEST000797031', type: 'sor'],
-                                       [identifier: '103459', type: 'enterprise']
-                               ]]
+            def ids = []
+            processorContext.openRegistryPerson.identifiers.each {
+                ids << [identifier: it.value, type: it.identifierType.name()]
+            }
             processorContext.outcome.idMatchType = 'CREATED'
-            processorContext.outcome.body = createdBody
+            processorContext.outcome.body = [referenceId: 'M225127891',
+                                             identifiers: ids]
             return processorContext
         }
     }

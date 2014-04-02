@@ -6,6 +6,7 @@ class Person extends Entity {
     Set<EmailAddress> emailAddresses
     Set<Name> names
     Set<Role> roles
+    Set<Identifier> identifiers = [] as Set<Identifier>
 
     /**
      * Enum representing genders. This list of genders was gathered from multiple sources including Wikipedia(R) and

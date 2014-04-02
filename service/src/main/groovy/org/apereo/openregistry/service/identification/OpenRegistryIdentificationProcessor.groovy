@@ -6,14 +6,14 @@ import org.apereo.openregistry.service.OpenRegistryProcessorContext
 
 /**
  *
- * A processor implementation for identification phase
+ * A processor implementation for identification phase - to generate identifiers for open registry (calculated) people
  */
 @Slf4j
-class IdentificationProcessor implements OpenRegistryProcessor {
+class OpenRegistryIdentificationProcessor implements OpenRegistryProcessor {
 
     @Override
     OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
-        log.info("Starting 'identification' processing phase with [$processorContext]")
+        log.info("Starting 'open registry identification' processing phase with [$processorContext]")
         //TODO implement....
         return processorContext
     }
