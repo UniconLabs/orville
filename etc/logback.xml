@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--
+
+    This file is the default logback configuration for Spring Boot. To use the same
+    defaults and add custom logger levels you can copy this file and add additional
+    overrides, e.g:
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
+    ...
+
+    -->
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+    <appender name="OR_FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>/etc/openregistry/logs/openregistry-application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>/etc/openregistry/logs/openregistry-application.log.%i</fileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <logger name="org.apereo" level="DEBUG" additivity="true">
+        <appender-ref ref="OR_FILE"/>
+    </logger>    
+
+</configuration>

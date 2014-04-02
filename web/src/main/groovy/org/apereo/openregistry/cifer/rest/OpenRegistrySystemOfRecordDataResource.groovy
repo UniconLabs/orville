@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -24,7 +25,7 @@ import static org.apereo.openregistry.model.request.OpenRegistryProcessingReques
 @Slf4j
 class OpenRegistrySystemOfRecordDataResource {
 
-    //TODO: Not wired in at the moment. Need an impl. and @Bean definition method in Application class
+    @Autowired
     private OpenRegistryProcessor openRegistryProcessor
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +44,7 @@ class OpenRegistrySystemOfRecordDataResource {
                 new OpenRegistryProcessorContext(request:
                         new OpenRegistryProcessingRequest(sor: sor, body: sorRequestData, type: TYPE.add)))
 
-        switch (processorCtx.outcome.idMatchType) {
+        switch (processorCtx.outcome?.idMatchType) {
             case 'OK':
                 return new ResponseEntity(HttpStatus.OK)
             case 'CREATED':
