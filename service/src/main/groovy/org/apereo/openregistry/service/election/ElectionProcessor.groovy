@@ -1,5 +1,6 @@
 package org.apereo.openregistry.service.election
 
+import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
@@ -9,6 +10,7 @@ import org.apereo.openregistry.service.OpenRegistryProcessorContext
  * A processor implementation for election phase
  */
 @Slf4j
+@EqualsAndHashCode
 class ElectionProcessor implements OpenRegistryProcessor {
 
     @Override

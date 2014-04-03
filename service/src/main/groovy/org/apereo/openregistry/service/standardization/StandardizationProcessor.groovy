@@ -1,5 +1,6 @@
 package org.apereo.openregistry.service.standardization
 
+import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.OpenRegistryPerson
 import org.apereo.openregistry.model.SystemOfRecordPerson
@@ -11,6 +12,7 @@ import org.apereo.openregistry.service.OpenRegistryProcessorContext
  * A processor implementation for standardization phase
  */
 @Slf4j
+@EqualsAndHashCode
 class StandardizationProcessor implements OpenRegistryProcessor {
 
     @Override

@@ -1,5 +1,6 @@
 package org.apereo.openregistry.service
 
+import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
 
 /**
@@ -10,6 +11,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 abstract class MockOutcomeProcessor {
 
+    @EqualsAndHashCode
     static class AddPersonMockOutcome_200 implements OpenRegistryProcessor {
 
         @Override
@@ -20,6 +22,7 @@ abstract class MockOutcomeProcessor {
         }
     }
 
+    @EqualsAndHashCode
     static class AddPersonMockOutcome_201 implements OpenRegistryProcessor {
 
         @Override
