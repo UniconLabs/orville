@@ -1,8 +1,11 @@
 package org.apereo.openregistry.model
 
+import groovy.transform.EqualsAndHashCode
+
 /**
  * Class representing a name.
  */
+@EqualsAndHashCode(includeFields = true)
 @grails.persistence.Entity
 class Name {
     String prefix

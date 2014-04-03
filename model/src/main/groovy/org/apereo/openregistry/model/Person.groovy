@@ -1,11 +1,15 @@
 package org.apereo.openregistry.model
 
+import groovy.transform.EqualsAndHashCode
+
+@EqualsAndHashCode(includeFields = true)
 class Person extends Entity {
     Date dateOfBirth
     Gender gender
     Set<EmailAddress> emailAddresses
     Set<Name> names
     Set<Role> roles
+    Map<String, String> extendedAttributes
 
     /**
      * Enum representing genders. This list of genders was gathered from multiple sources including Wikipedia(R) and

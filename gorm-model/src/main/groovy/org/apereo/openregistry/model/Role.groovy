@@ -10,6 +10,7 @@ class Role {
     int percentTime = 100
     Affiliation affiliation
     Termination termination
+    Map<String, String> extendedAttributes = [:] as Map<String, String>
 
     static constraints = {
         termination nullable: true

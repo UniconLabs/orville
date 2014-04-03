@@ -9,6 +9,7 @@ class Role {
     int percentTime
     Affiliation affiliation
     Termination termination
+    Map<String, String> extendedAttributes
 
     static class Affiliation {
         Date date

@@ -1,5 +1,8 @@
 package org.apereo.openregistry.model
 
+import groovy.transform.EqualsAndHashCode
+
+@EqualsAndHashCode(includeFields = true, callSuper = true)
 @grails.persistence.Entity
 class Person extends Entity {
     Date dateOfBirth
@@ -7,6 +10,7 @@ class Person extends Entity {
     Set<EmailAddress> emailAddresses = [] as Set<EmailAddress>
     Set<Name> names = [] as Set<Name>
     Set<Role> roles = [] as Set<Role>
+    Map<String, String> extendedAttributes = [:] as Map<String, String>
 
     static constraints = {
         dateOfBirth nullable: true
