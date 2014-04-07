@@ -6,6 +6,7 @@ import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
+import org.h2.jdbcx.JdbcDataSource
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
@@ -13,6 +14,8 @@ import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+
+import javax.sql.DataSource
 
 /**
  *
@@ -43,5 +46,16 @@ class Application extends SpringBootServletInitializer {
                         new MockOutcomeProcessor.AddPersonMockOutcome_200()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
+    }
+
+    @Bean
+    DataSource dataSource() {
+        //TODO: externalize the datasource config somehow to make it a deployment config concern!!!
+        new JdbcDataSource().with {
+            it.URL = "jdbc:h2:/tmp/orville"
+            user = "sa"
+            password = "sa"
+            return it
+        }
     }
 }
