@@ -2,7 +2,7 @@ package org.apereo.openregistry.service.calculation
 
 import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
-import org.apereo.openregistry.model.OpenRegistryPerson
+import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 
@@ -19,7 +19,7 @@ class CalculationProcessor implements OpenRegistryProcessor {
         log.info("Starting 'calculation' processing phase with [$processorContext]")
         //TODO: Just a mock impl for now. Implement the real thing...
 
-        processorContext.openRegistryPerson = new OpenRegistryPerson()
+        processorContext.person = new Person()
         return processorContext
     }
 }

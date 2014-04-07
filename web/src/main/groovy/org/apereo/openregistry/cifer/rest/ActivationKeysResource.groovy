@@ -1,7 +1,6 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
-import org.apereo.openregistry.model.ActivationKey
 import org.apereo.openregistry.service.activation.ActivationKeyService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -29,7 +28,7 @@ class ActivationKeysResource {
 
         //TODO error handling
 
-        ActivationKey ak = this.activationKeyService.createFor(activationKeyRequestData.identifier.identifier, activationKeyRequestData.identifier.type)
+        def ak = this.activationKeyService.createFor(activationKeyRequestData.identifier.identifier, activationKeyRequestData.identifier.type)
         new ResponseEntity([activationKey: ak.value, validThrough: ak.validThroughAsString], HttpStatus.OK)
 
     }

@@ -2,8 +2,7 @@ package org.apereo.openregistry.service.standardization
 
 import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
-import org.apereo.openregistry.model.OpenRegistryPerson
-import org.apereo.openregistry.model.SystemOfRecordPerson
+import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 
@@ -20,7 +19,7 @@ class StandardizationProcessor implements OpenRegistryProcessor {
         log.info("Starting 'standardization' processing phase with [$processorContext]")
         //TODO: Just a mock impl for now. Implement the real thing...
 
-        processorContext.systemOfRecordPerson = new SystemOfRecordPerson()
+        processorContext.person = new Person()
         return processorContext
     }
 }

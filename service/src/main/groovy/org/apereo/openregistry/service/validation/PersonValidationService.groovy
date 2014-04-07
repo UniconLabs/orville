@@ -1,13 +1,14 @@
 package org.apereo.openregistry.service.validation
 
-import org.apereo.openregistry.model.SystemOfRecordPerson
+import org.apereo.openregistry.model.Person
+
 
 /**
  *
- * Validation service API for {@link org.apereo.openregistry.model.SystemOfRecordPerson}s
+ * Validation service API for Person
  */
 public interface PersonValidationService {
 
-    PersonValidationResult validate(SystemOfRecordPerson systemOfRecordPerson)
+    PersonValidationResult validate(Person person)
 
 }

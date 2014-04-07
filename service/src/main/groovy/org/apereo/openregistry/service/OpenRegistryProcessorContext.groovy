@@ -1,8 +1,7 @@
 package org.apereo.openregistry.service
 
 import groovy.transform.ToString
-import org.apereo.openregistry.model.OpenRegistryPerson
-import org.apereo.openregistry.model.SystemOfRecordPerson
+import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 
 /**
@@ -26,7 +25,5 @@ class OpenRegistryProcessorContext {
 
     Map<String, Object> outcome = [body: null, isFrozen: false]
 
-    SystemOfRecordPerson systemOfRecordPerson
-
-    OpenRegistryPerson openRegistryPerson
+    Person person
 }

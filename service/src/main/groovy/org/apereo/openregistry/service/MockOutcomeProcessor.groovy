@@ -29,8 +29,8 @@ abstract class MockOutcomeProcessor {
         OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
             log.debug("AddPersonMockOutcome_201 is executing...")
             def ids = []
-            processorContext.openRegistryPerson.identifiers.each {
-                ids << [identifier: it.value, type: it.identifierType.name()]
+            processorContext.person.wallet.each {
+                ids << [identifier: it.info, type: it.systemOfRecord.code]
             }
             processorContext.outcome.idMatchType = 'CREATED'
             processorContext.outcome.body = [referenceId: 'M225127891',

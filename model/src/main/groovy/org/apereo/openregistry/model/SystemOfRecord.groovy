@@ -7,7 +7,10 @@ import grails.persistence.Entity
  */
 @Entity
 class SystemOfRecord {
+
     String code
+
     String description
+
     boolean active
 }
