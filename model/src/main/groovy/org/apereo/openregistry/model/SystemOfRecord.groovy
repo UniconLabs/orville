@@ -13,4 +13,9 @@ class SystemOfRecord {
     String description
 
     boolean active
+
+    static constraints = {
+        code unique: true
+        description nullable: true, blank: true
+    }
 }

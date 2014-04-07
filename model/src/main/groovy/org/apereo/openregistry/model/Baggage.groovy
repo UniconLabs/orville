@@ -17,7 +17,7 @@ class Baggage {
         baggageAsString maxSize: 64000
     }
 
-    static transients = ['baggage']
+    static transients = ['contents']
 
     def afterLoad() {
         contents = new JsonSlurper().parseText(baggageAsString)
