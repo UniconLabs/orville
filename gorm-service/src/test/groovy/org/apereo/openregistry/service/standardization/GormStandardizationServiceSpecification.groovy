@@ -2,6 +2,7 @@ package org.apereo.openregistry.service.standardization
 
 import org.apereo.openregistry.model.EmailAddress
 import org.apereo.openregistry.model.Name
+import org.apereo.openregistry.model.Role
 import org.apereo.openregistry.model.SystemOfRecordPerson
 import spock.lang.Specification
 
@@ -61,7 +62,12 @@ class GormStandardizationServiceSpecification extends Specification {
                                 givenName: 'Pat',
                                 familyName: 'Lee'
                         )
-                ] as Set<Name>
+                ] as Set<Name>,
+                roles: [
+                        new Role(
+
+                        )
+                ] as Set<Role>
         )]
     }
 

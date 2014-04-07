@@ -6,13 +6,20 @@ import org.apereo.openregistry.model.Name
 import org.apereo.openregistry.model.SystemOfRecordPerson
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 
+
 class GormStandardizationService implements StandardizationService {
     @Override
     OpenRegistryProcessorContext standardize(OpenRegistryProcessorContext openRegistryProcessorContext) {
+        openRegistryProcessorContext.systemOfRecordPerson = standardize(openRegistryProcessorContext.request.body)
+        openRegistryProcessorContext.request.
         return openRegistryProcessorContext
     }
 
     protected SystemOfRecordPerson standardize(String input) {
+        /*
+        Current implementation does a simple mapping between the JSON input and the object graph. This should later be
+        controlled by configuration.
+         */
         def jsonObject = new JsonSlurper().parseText(input)
         def p = new SystemOfRecordPerson()
         jsonObject.sorAttributes.emailAddresses.each { it ->

@@ -21,7 +21,7 @@ class Role {
         Date date
         AffiliationType type
 
-        static enum AffiliationType {}
+        static enum AffiliationType {GUEST}
     }
 
     @grails.persistence.Entity
