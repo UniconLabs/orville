@@ -1,8 +1,10 @@
 package org.apereo.openregistry.model
 
 /**
- * Class representing a system of record.
+ * System of record
  */
 class SystemOfRecord {
-    String name
+    String code
+    String description
+    boolean active
 }

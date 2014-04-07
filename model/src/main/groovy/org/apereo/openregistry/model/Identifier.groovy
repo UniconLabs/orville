@@ -1,17 +1,9 @@
 package org.apereo.openregistry.model
 
-import groovy.transform.ToString
-
-@ToString
+/**
+ * A person's identifier from a system of record
+ */
 class Identifier {
-
-    String value
-    IdentifierType identifierType
-    IdentifierStatus identifierStatus
-
-    static enum IdentifierType {
-        sor, enterprise
-    }
-    static enum IdentifierStatus {}
+    SystemOfRecord systemOfRecord
+    Object identifier
 }
-
