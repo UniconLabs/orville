@@ -8,5 +8,5 @@ import grails.persistence.Entity
 @Entity
 class Identifier {
     SystemOfRecord systemOfRecord
-    Object identifier
+    Object info
 }

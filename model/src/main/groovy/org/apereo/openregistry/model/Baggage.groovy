@@ -10,7 +10,7 @@ import groovy.json.JsonSlurper
 @Entity
 class Baggage {
     SystemOfRecord systemOfRecord
-    Map<String,Object> baggage
+    Map<String,Object> contents
     String baggageAsString
 
     static constraints = {
