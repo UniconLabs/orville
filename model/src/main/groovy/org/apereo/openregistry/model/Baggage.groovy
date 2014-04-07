@@ -20,7 +20,7 @@ class Baggage {
     static transients = ['baggage']
 
     def afterLoad() {
-        baggage = new JsonSlurper().parseText(baggageAsString)
+        contents = new JsonSlurper().parseText(baggageAsString)
     }
 
     def beforeInsert() {
@@ -33,7 +33,7 @@ class Baggage {
 
     String baggageToString() {
         new JsonBuilder().with {
-            it baggage
+            it contents
             return it
         }.toString()
     }
