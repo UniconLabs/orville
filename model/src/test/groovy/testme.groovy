@@ -1,4 +1,3 @@
-import grails.persistence.Entity
 import org.h2.jdbcx.JdbcDataSource
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
