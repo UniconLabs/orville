@@ -1,23 +1,7 @@
-buildscript {
-    repositories {
-        maven { url "http://repo.spring.io/milestone" }
-        maven { url "http://repo.spring.io/release" }
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${project."spring-boot.version"}")
-    }
-}
-
-apply plugin: "spring-boot"
-
-bootRepackage.enabled = false
-
 dependencies {
     compile("org.grails:gorm-hibernate4-spring-boot:${project."spring-boot-gorm-hibernate.version"}")
 
     testCompile("com.h2database:h2:${project."h2.version"}")
-    testCompile("org.springframework.boot:spring-boot-starter-web")
 }
 
 jar {
