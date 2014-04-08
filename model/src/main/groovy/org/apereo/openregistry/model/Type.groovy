@@ -6,4 +6,8 @@ import grails.persistence.Entity
 class Type {
     Class target
     String value
+
+    static constraints = {
+        value unique: 'target'
+    }
 }
