@@ -6,14 +6,17 @@ import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
-import org.h2.jdbcx.JdbcDataSource
+import org.h2.server.web.WebServlet
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.boot.context.embedded.ServletRegistrationBean
 import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.datasource.DriverManagerDataSource
 
 import javax.sql.DataSource
 
@@ -27,6 +30,18 @@ import javax.sql.DataSource
 class Application extends SpringBootServletInitializer {
 
     private static applicationClass = Application
+
+    @Value('${database.driver}')
+    private String databaseDriver
+
+    @Value('${database.url}')
+    private String databaseUrl
+
+    @Value('${database.username}')
+    private String databaseUsername
+
+    @Value('${database.password}')
+    private String databasePassword
 
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args)
@@ -50,12 +65,9 @@ class Application extends SpringBootServletInitializer {
 
     @Bean
     DataSource dataSource() {
-        //TODO: externalize the datasource config somehow to make it a deployment config concern!!!
-        new JdbcDataSource().with {
-            it.URL = "jdbc:h2:/tmp/orville"
-            user = "sa"
-            password = "sa"
-            return it
-        }
+        new DriverManagerDataSource(driverClassName: databaseDriver,
+                url: databaseUrl,
+                username: databaseUsername,
+                password: databasePassword)
     }
 }
