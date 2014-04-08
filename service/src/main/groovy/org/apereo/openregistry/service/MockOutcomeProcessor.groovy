@@ -2,6 +2,7 @@ package org.apereo.openregistry.service
 
 import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.model.TokenIdentifier
 
 /**
  *
@@ -29,8 +30,10 @@ abstract class MockOutcomeProcessor {
         OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
             log.debug("AddPersonMockOutcome_201 is executing...")
             def ids = []
-            processorContext.person.wallet.each {
-                ids << [identifier: it.info, type: it.systemOfRecord.code]
+            (processorContext.person.wallet.findAll {
+                TokenIdentifier.isAssignableFrom(it.class)
+            } as Collection<TokenIdentifier>).each {
+                ids << [identifier: it.token, type: it.type.value]
             }
             processorContext.outcome.idMatchType = 'CREATED'
             processorContext.outcome.body = [referenceId: 'M225127891',
