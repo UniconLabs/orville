@@ -8,6 +8,8 @@ class TokenIdentifier extends Identifier {
     String token
 
     static constraints = {
-        type validator: { type.target == TokenIdentifier }
+        type validator: { val, obj ->
+            TokenIdentifier.isAssignableFrom(val.target)
+        }
     }
 }

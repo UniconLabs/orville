@@ -3,6 +3,8 @@ import org.apereo.openregistry.model.Name
 import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.NameIdentifier
+import org.apereo.openregistry.model.TokenIdentifier
+import org.apereo.openregistry.model.Type
 import org.h2.jdbcx.JdbcDataSource
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -32,16 +34,27 @@ class SimpleApplication implements CommandLineRunner {
         if (!s) {
             s = new SystemOfRecord(code: "OR").save()
         }
+
+        def type = Type.findByTargetAndValue(TokenIdentifier, 'test')
+        if (!type) {
+            type = new Type(target: TokenIdentifier, value: 'test').save()
+        }
+
+        def nameType = Type.findByTargetAndValue(NameIdentifier, "preferred")
+        if (!nameType) {
+            nameType = new Type(target: NameIdentifier, value: "preferred").save()
+        }
         def user = new Person().with {
-            wallet.add(new NameIdentifier(systemOfRecord: s, info: new Name(givenName: "Jj")))
-            wallet.add(new Identifier(systemOfRecord: s, info: "this is a test"))
+            wallet.add(new NameIdentifier(systemOfRecord: s, name: new Name(givenName: "Jj"), type: nameType))
+            wallet.add(new TokenIdentifier(systemOfRecord: s, token: "this is a test", type: type))
             return it
         }.save()
 
         Person.withTransaction {
             Person.findAll().each { person ->
+                println "person: ${person}"
                 person.wallet.each {
-                    println "here: ${it}: ${it.class}: ${it.info}"
+                    println "\there: ${it}: ${it.class}: ${it instanceof TokenIdentifier ? it.token : ""}"
                 }
             }
         }
