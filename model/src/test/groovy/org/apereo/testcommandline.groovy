@@ -1,8 +1,9 @@
-import org.apereo.openregistry.model.Identifier
+package org.apereo
+
 import org.apereo.openregistry.model.Name
+import org.apereo.openregistry.model.NameIdentifier
 import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.model.SystemOfRecord
-import org.apereo.openregistry.model.NameIdentifier
 import org.apereo.openregistry.model.TokenIdentifier
 import org.apereo.openregistry.model.Type
 import org.h2.jdbcx.JdbcDataSource
@@ -11,11 +12,13 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration
 
 import javax.sql.DataSource
 
 @EnableAutoConfiguration
 @ComponentScan
+@Configuration
 class SimpleApplication implements CommandLineRunner {
     @Bean
     DataSource dataSource() {
@@ -44,7 +47,7 @@ class SimpleApplication implements CommandLineRunner {
         if (!nameType) {
             nameType = new Type(target: NameIdentifier, value: "preferred").save()
         }
-        def user = new Person().with {
+        new Person().with {
             wallet.add(new NameIdentifier(systemOfRecord: s, name: new Name(givenName: "Jj"), type: nameType))
             wallet.add(new TokenIdentifier(systemOfRecord: s, token: "this is a test", type: type))
             return it
