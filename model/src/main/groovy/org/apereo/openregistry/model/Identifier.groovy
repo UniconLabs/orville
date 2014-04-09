@@ -10,4 +10,7 @@ import groovy.transform.EqualsAndHashCode
 @EqualsAndHashCode
 class Identifier {
     SystemOfRecord systemOfRecord
+
+    Date dateCreated
+    Date lastUpdated
 }

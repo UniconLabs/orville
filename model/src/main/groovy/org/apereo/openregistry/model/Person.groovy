@@ -12,6 +12,9 @@ class Person {
     Set<Baggage> baggage = [] as Set<Baggage>
     Set<Identifier> wallet = [] as Set<Identifier>
 
+    Date dateCreated
+    Date lastUpdated
+
     static hasMany = [baggage: Baggage, wallet: Identifier]
 
     static mapping = {

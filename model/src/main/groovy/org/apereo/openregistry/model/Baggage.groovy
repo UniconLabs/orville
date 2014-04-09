@@ -15,6 +15,9 @@ class Baggage {
     Map<String,Object> contents
     String baggageAsString
 
+    Date dateCreated
+    Date lastUpdated
+
     static constraints = {
         baggageAsString maxSize: 64000
     }
