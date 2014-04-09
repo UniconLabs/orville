@@ -3,11 +3,13 @@ package org.apereo.openregistry.model
 import grails.persistence.Entity
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
+import groovy.transform.EqualsAndHashCode
 
 /**
  * Container for extra information about a person from a system of record
  */
 @Entity
+@EqualsAndHashCode
 class Baggage {
     SystemOfRecord systemOfRecord
     Map<String,Object> contents
