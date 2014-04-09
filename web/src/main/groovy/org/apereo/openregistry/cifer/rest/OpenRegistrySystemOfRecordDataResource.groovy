@@ -1,6 +1,7 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext

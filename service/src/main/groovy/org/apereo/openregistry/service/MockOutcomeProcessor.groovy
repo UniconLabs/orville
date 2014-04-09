@@ -30,9 +30,7 @@ abstract class MockOutcomeProcessor {
         OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
             log.debug("AddPersonMockOutcome_201 is executing...")
             def ids = []
-            (processorContext.person.wallet.findAll {
-                TokenIdentifier.isAssignableFrom(it.class)
-            } as Collection<TokenIdentifier>).each {
+            processorContext.person.getTokenIdentifiers().each {
                 ids << [identifier: it.token, type: it.type.value]
             }
             processorContext.outcome.idMatchType = 'CREATED'

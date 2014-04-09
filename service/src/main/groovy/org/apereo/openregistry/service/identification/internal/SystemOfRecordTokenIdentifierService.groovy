@@ -1,6 +1,5 @@
 package org.apereo.openregistry.service.identification.internal
 
-import groovy.transform.Immutable
 import org.apereo.openregistry.model.Person
 import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.TokenIdentifier
