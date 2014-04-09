@@ -29,8 +29,8 @@ class SystemOfRecordTokenIdentifierService implements TokenIdentifierService {
     @Override
     TokenIdentifier createFor(String systemOfRecord, Person person, String tokenIdentifierType) {
         new TokenIdentifier(
-                systemOfRecord: new SystemOfRecord(code: systemOfRecord),
+                systemOfRecord: SystemOfRecord.findByCode(systemOfRecord) ?: new SystemOfRecord(code: systemOfRecord, active: true),
                 token: this.prefix + this.tokenGeneratorStrategy.generateToken(),
-                type: new Type(target: TokenIdentifier, value: tokenIdentifierType))
+                type: Type.findByTargetAndValue(TokenIdentifier, tokenIdentifierType) ?: new Type(target: TokenIdentifier, value: tokenIdentifierType))
     }
 }
