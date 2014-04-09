@@ -1,5 +1,6 @@
 package org.apereo.openregistry.springboot
 
+import com.jolbox.bonecp.BoneCPDataSource
 import org.apereo.openregistry.service.CompositeOpenRegistryProcessor
 import org.apereo.openregistry.service.MockOutcomeProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessor
@@ -8,17 +9,14 @@ import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGe
 import org.apereo.openregistry.service.identification.internal.SystemOfRecordTokenIdentifierService
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
-import org.h2.server.web.WebServlet
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.context.embedded.ServletRegistrationBean
 import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.jdbc.datasource.DriverManagerDataSource
 
 import javax.sql.DataSource
 
@@ -34,16 +32,16 @@ class Application extends SpringBootServletInitializer {
     private static applicationClass = Application
 
     @Value('${database.driver}')
-    private String databaseDriver
+    String databaseDriver
 
     @Value('${database.url}')
-    private String databaseUrl
+    String databaseUrl
 
     @Value('${database.username}')
-    private String databaseUsername
+    String databaseUsername
 
     @Value('${database.password}')
-    private String databasePassword
+    String databasePassword
 
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args)
@@ -65,11 +63,14 @@ class Application extends SpringBootServletInitializer {
         new CompositeOpenRegistryProcessor(pipeline)
     }
 
-    @Bean
+    @Bean(destroyMethod = 'close')
     DataSource dataSource() {
-        new DriverManagerDataSource(driverClassName: databaseDriver,
-                url: databaseUrl,
-                username: databaseUsername,
-                password: databasePassword)
+        new BoneCPDataSource().with {
+            it.driverClass = this.databaseDriver
+            it.jdbcUrl = this.databaseUrl
+            it.username = this.databaseUsername
+            it.password = this.databasePassword
+            return it
+        }
     }
 }
