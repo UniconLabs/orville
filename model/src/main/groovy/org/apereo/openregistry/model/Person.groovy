@@ -1,11 +1,13 @@
 package org.apereo.openregistry.model
 
 import grails.persistence.Entity
+import groovy.transform.EqualsAndHashCode
 
 /**
  * A container for information about a person
  */
 @Entity
+@EqualsAndHashCode
 class Person {
 
     Set<Baggage> baggage = [] as Set<Baggage>

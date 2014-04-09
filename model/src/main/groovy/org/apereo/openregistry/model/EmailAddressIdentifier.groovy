@@ -5,13 +5,15 @@ import groovy.transform.EqualsAndHashCode
 
 @Entity
 @EqualsAndHashCode
-class TokenIdentifier extends Identifier {
+class EmailAddressIdentifier extends Identifier {
     Type type
-    String token
+    String emailAddress
 
     static constraints = {
         type validator: { val, obj ->
             TokenIdentifier.isAssignableFrom(val.target)
         }
+
+        emailAddress email: true
     }
 }
