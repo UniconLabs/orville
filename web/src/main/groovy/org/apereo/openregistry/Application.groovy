@@ -56,7 +56,6 @@ class Application extends SpringBootServletInitializer {
 
     @Bean
     OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
-        //TODO: these processors are not implemented yet. Also what is the correct order of them in the pipeline???
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
                         new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('guest-', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
