@@ -86,6 +86,9 @@ class Application extends SpringBootServletInitializer {
             if (!systemOfRecord) {
                 new SystemOfRecord(code: "test", active: true).save()
             }
+            if (!SystemOfRecord.findByCodeAndActive("guest", true)) {
+                new SystemOfRecord(code: "guest", active: true).save()
+            }
             def nameType = Type.findByTargetAndValue(NameIdentifier, "official")
             if (!nameType) {
                 new Type(target: NameIdentifier, value: 'official').save()
