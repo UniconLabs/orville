@@ -57,7 +57,7 @@ class Application extends SpringBootServletInitializer {
     @Bean
     OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
-                        new ReconciliationProcessor(),
+                        //new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('guest-', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
                         new PersistenceProcessor(),
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet

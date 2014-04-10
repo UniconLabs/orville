@@ -19,7 +19,6 @@ class ReconciliationProcessor implements OpenRegistryProcessor {
         log.info("Starting 'reconciliation' processing phase with [$processorContext]")
         //TODO implement the real thing
 
-        processorContext.person = new Person()
         return processorContext
     }
 }
