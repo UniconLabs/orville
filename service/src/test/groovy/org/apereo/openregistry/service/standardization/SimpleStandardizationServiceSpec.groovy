@@ -37,6 +37,9 @@ class SimpleStandardizationServiceSpec extends Specification {
     Type networkIdentifierType
 
     @Shared
+    Person fullPerson
+
+    @Shared
     def sampleJson = '''{
   "sorAttributes":
   {
@@ -75,25 +78,8 @@ class SimpleStandardizationServiceSpec extends Specification {
         nameType = new Type(target: NameIdentifier, value: 'official').save()
         emailType = new Type(target: EmailAddressIdentifier, value: 'personal').save()
         networkIdentifierType = new Type(target: TokenIdentifier, value: 'network').save()
-    }
 
-    def "simple test"() {
-        expect:
-        standardizationService.standardize('test', '') == new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
-    }
-
-    def "simple failure test"() {
-        expect:
-        standardizationService.standardize('test', '') != new Person(baggage: [new Baggage(systemOfRecord: new SystemOfRecord(code: 'nottest', active: true).save())])
-    }
-
-    def "test json standardization"() {
-        expect:
-        def x = standardizationService.standardize('test', sampleJson)
-        x == output
-
-        where:
-        output << [new Person().with {
+        fullPerson = new Person().with {
             baggage << new Baggage(
                     systemOfRecord: systemOfRecord,
                     contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>
@@ -115,6 +101,34 @@ class SimpleStandardizationServiceSpec extends Specification {
                     token: 'pl53'
             )
             return it
-        }]
+        }
+    }
+
+    def "simple test"() {
+        expect:
+        standardizationService.standardize('test', '') == new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
+    }
+
+    def "simple failure test"() {
+        expect:
+        standardizationService.standardize('test', '') != new Person(baggage: [new Baggage(systemOfRecord: new SystemOfRecord(code: 'nottest', active: true).save())])
+    }
+
+    def "test json standardization"() {
+        expect:
+        def x = standardizationService.standardize('test', sampleJson)
+        x == output
+
+        where:
+        output << [fullPerson]
+    }
+
+    def "test map standardization"() {
+        expect:
+        def map = new JsonSlurper().parseText(sampleJson)
+        standardizationService.standardize('test', map) == output
+
+        where:
+        output << [fullPerson]
     }
 }
