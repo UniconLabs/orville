@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration
 
 @EnableAutoConfiguration
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = ['org.apereo.openregistry'])
 class TestApplication {
-
 }
