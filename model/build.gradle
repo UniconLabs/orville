@@ -1,5 +1,6 @@
 dependencies {
     compile("org.grails:gorm-hibernate4-spring-boot:${project."spring-boot-gorm-hibernate.version"}")
+    compile("commons-validator:commons-validator:${project."commons-validator.version"}")
 
     testCompile("com.h2database:h2:${project."h2.version"}")
 }
