@@ -17,14 +17,12 @@ import org.springframework.stereotype.Service
  */
 @Service
 class SimpleStandardizationService implements StandardizationService {
-    @Override
-    Person standardize(String systemOfRecordCode, String jsonBody) {
-        def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
-        if (!jsonBody || jsonBody == '')
-            return new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
-        Person p = new Person()
 
-        def info = new JsonSlurper().parseText(jsonBody) as Map<String, Object>
+    @Override
+    Person standardize(String systemOfRecordCode, Map info) {
+        def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
+
+        Person p = new Person()
         p.baggage << new Baggage(
                 systemOfRecord: systemOfRecord,
                 contents: info
@@ -64,5 +62,15 @@ class SimpleStandardizationService implements StandardizationService {
         }
 
         return p
+    }
+
+    @Override
+    Person standardize(String systemOfRecordCode, String jsonBody) {
+        if (!jsonBody || jsonBody == '') {
+            def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
+            return new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
+        }
+        def info = new JsonSlurper().parseText(jsonBody) as Map<String, Object>
+        return standardize(systemOfRecordCode, info)
     }
 }

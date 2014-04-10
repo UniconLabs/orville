@@ -14,4 +14,5 @@ public interface StandardizationService {
      * @return
      */
     Person standardize(String systemOfRecordCode, String jsonBody)
+    Person standardize(String systemOfRecordCode, Map request)
 }
