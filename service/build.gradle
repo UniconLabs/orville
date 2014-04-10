@@ -1,5 +1,6 @@
 dependencies {
     compile project(":model")
+    testRuntime("com.h2database:h2:${project."h2.version"}")
 }
 
 jar {
