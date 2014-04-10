@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 @Slf4j
 @EqualsAndHashCode
 class StandardizationProcessor implements OpenRegistryProcessor {
+
     @Autowired
     StandardizationService standardizationService
 

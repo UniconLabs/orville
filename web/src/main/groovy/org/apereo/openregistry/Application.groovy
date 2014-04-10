@@ -8,6 +8,7 @@ import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGeneratorStrategy
 import org.apereo.openregistry.service.identification.internal.SystemOfRecordTokenIdentifierService
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
+import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
@@ -55,7 +56,7 @@ class Application extends SpringBootServletInitializer {
     @Bean
     OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
         //TODO: these processors are not implemented yet. Also what is the correct order of them in the pipeline???
-        def pipeline = [new StandardizationProcessor(),
+        def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
                         new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('guest-', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
