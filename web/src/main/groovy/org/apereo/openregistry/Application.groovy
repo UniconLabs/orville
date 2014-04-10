@@ -1,4 +1,4 @@
-package org.apereo.openregistry.springboot
+package org.apereo.openregistry
 
 import com.jolbox.bonecp.BoneCPDataSource
 import org.apereo.openregistry.service.CompositeOpenRegistryProcessor
