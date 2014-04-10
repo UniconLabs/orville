@@ -19,7 +19,7 @@ class Baggage {
     Date lastUpdated
 
     static constraints = {
-        baggageAsString maxSize: 64000
+        baggageAsString maxSize: 64000, nullable: true
     }
 
     static transients = ['contents']

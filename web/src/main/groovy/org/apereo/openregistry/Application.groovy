@@ -98,6 +98,10 @@ class Application extends SpringBootServletInitializer {
             if (!networkIdentifierType) {
                 new Type(target: TokenIdentifier, value: 'network').save()
             }
+            def networkIdentifierType2 = Type.findByTargetAndValue(TokenIdentifier, "guest")
+            if (!networkIdentifierType2) {
+                new Type(target: TokenIdentifier, value: 'guest').save()
+            }
         }
     }
 }

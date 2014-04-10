@@ -12,7 +12,16 @@ class PersistenceProcessor implements OpenRegistryProcessor {
     OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
         if (processorContext.person) {
             Person.withTransaction {
-                processorContext.person = processorContext.person.save()
+                def p = processorContext.person.save()
+                if(p) {
+                    processorContext.person = p
+                }
+                else {
+                    processorContext.person.errors.each {
+                        println "ERROR ===============> ${it.fieldError.toString()}"
+                    }
+                }
+
             }
         }
         return processorContext

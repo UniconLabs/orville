@@ -30,6 +30,6 @@ class SystemOfRecordTokenIdentifierService implements TokenIdentifierService {
         new TokenIdentifier(
                 systemOfRecord: SystemOfRecord.findByCode(systemOfRecord) ?: new SystemOfRecord(code: systemOfRecord, active: true),
                 token: this.prefix + this.tokenGeneratorStrategy.generateToken(),
-                type: Type.findByTargetAndValue(TokenIdentifier, tokenIdentifierType) ?: new Type(target: TokenIdentifier, value: tokenIdentifierType))
+                type: Type.findByTargetAndValue(TokenIdentifier, tokenIdentifierType))
     }
 }
