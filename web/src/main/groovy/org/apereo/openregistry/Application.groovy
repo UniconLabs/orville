@@ -7,6 +7,7 @@ import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGeneratorStrategy
 import org.apereo.openregistry.service.identification.internal.SystemOfRecordTokenIdentifierService
+import org.apereo.openregistry.service.persistence.PersistenceProcessor
 import org.apereo.openregistry.service.reconciliation.ReconciliationProcessor
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
@@ -59,6 +60,7 @@ class Application extends SpringBootServletInitializer {
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
                         new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('guest-', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
+                        new PersistenceProcessor(),
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
