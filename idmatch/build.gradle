@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":service")
+    compile project(":model")
+    compile "org.codehaus.groovy.modules.http-builder:http-builder:${project."http-builder.version"}"
+}
