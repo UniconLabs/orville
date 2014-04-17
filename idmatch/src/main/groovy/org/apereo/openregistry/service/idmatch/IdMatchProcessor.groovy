@@ -18,6 +18,9 @@ class IdMatchProcessor implements OpenRegistryProcessor {
         def ids = processorContext.person.tokenIdentifiers
         TokenIdentifier identifier = processorContext.person.tokenIdentifiers.find {it.type.value == 'guest'}
         def response = idMatchService.putIdMatchServiceResponse(processorContext.person, "guest", identifier.token)
+        if (!response) {
+            throw new IllegalStateException("empty response")
+        }
         def sor = SystemOfRecord.findByCodeAndActive("idmatch", true)
         processorContext.person.wallet << new TokenIdentifier(systemOfRecord: sor, type: Type.findByTargetAndValue(TokenIdentifier, "referenceid"), token: response.referenceId)
         processorContext.person.baggage << new Baggage(systemOfRecord: sor, contents: response.fullResponse)

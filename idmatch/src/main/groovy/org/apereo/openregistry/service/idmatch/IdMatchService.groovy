@@ -1,6 +1,7 @@
 package org.apereo.openregistry.service.idmatch
 
 import groovy.json.JsonBuilder
+import groovy.util.logging.Slf4j
 import groovyx.net.http.ContentType
 import groovyx.net.http.HttpResponseException
 import groovyx.net.http.RESTClient
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component
 
 import javax.annotation.PostConstruct
 
+@Slf4j
 @Component
 class IdMatchService {
     @Autowired
@@ -55,7 +57,7 @@ class IdMatchService {
                 names person.nameIdentifiers.collect { NameIdentifier nameId -> ["type": nameId.type.value, "given": nameId.name.givenName, "family": nameId.name.familyName] }
                 identifiers(person.tokenIdentifiers.collect {TokenIdentifier id -> ["type": id.type.value, "identifier": ${id.token}]} + ["type": "sor", "identifier": sorId])
             }
-            def path = "${serviceConfig.version}/people/${sor.toLowerCase()}/id"
+            def path = "${serviceConfig.version}/people/${sor.toLowerCase()}/${sorId}"
             def resp = restClient.put(
                     path: path,
                     body: builder.toString(),
@@ -63,7 +65,7 @@ class IdMatchService {
             )
             return new IdMatchServiceResponse(status: IdMatchServiceResponse.Status.OK, referenceId: resp.data.referenceId, fullResponse: resp.data)
         } catch (def e) {
-            println "here we are"
+            log.error(e.message, e)
         }
     }
 }
