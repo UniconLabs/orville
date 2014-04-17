@@ -8,9 +8,12 @@ import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGeneratorStrategy
 import org.apereo.openregistry.service.identification.internal.SystemOfRecordTokenIdentifierService
+import org.apereo.openregistry.service.idmatch.IdMatchProcessor
+import org.apereo.openregistry.service.idmatch.IdMatchService
 import org.apereo.openregistry.service.persistence.PersistenceProcessor
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -46,6 +49,9 @@ class Application extends SpringBootServletInitializer {
     @Value('${database.password}')
     String databasePassword
 
+    @Autowired
+    IdMatchService idMatchService
+
     public static void main(String[] args) {
         def application = new SpringApplication(applicationClass)
         application.run(args)
@@ -61,12 +67,14 @@ class Application extends SpringBootServletInitializer {
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
                         //new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('guest-', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
+                        new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
     }
 
+    /*
     @Bean(destroyMethod = 'close')
     DataSource dataSource() {
         new BoneCPDataSource().with {
@@ -77,33 +85,31 @@ class Application extends SpringBootServletInitializer {
             return it
         }
     }
+     */
 
     @Configuration
     static class BootStrap {
         @PostConstruct
         def bootstrap() {
-            def systemOfRecord = SystemOfRecord.findByCodeAndActive("test", true)
-            if (!systemOfRecord) {
-                new SystemOfRecord(code: "test", active: true).save()
+            // set up systems of record
+            ['test', 'guest', 'idmatch'].each {
+                if (!SystemOfRecord.findByCodeAndActive(it, true)) {
+                    new SystemOfRecord(code: it, active: true).save()
+                }
             }
-            if (!SystemOfRecord.findByCodeAndActive("guest", true)) {
-                new SystemOfRecord(code: "guest", active: true).save()
-            }
-            def nameType = Type.findByTargetAndValue(NameIdentifier, "official")
-            if (!nameType) {
-                new Type(target: NameIdentifier, value: 'official').save()
-            }
-            def emailType = Type.findByTargetAndValue(EmailAddressIdentifier, "personal")
-            if (!emailType) {
-                new Type(target: EmailAddressIdentifier, value: 'personal').save()
-            }
-            def networkIdentifierType = Type.findByTargetAndValue(TokenIdentifier, "network")
-            if (!networkIdentifierType) {
-                new Type(target: TokenIdentifier, value: 'network').save()
-            }
-            def networkIdentifierType2 = Type.findByTargetAndValue(TokenIdentifier, "guest")
-            if (!networkIdentifierType2) {
-                new Type(target: TokenIdentifier, value: 'guest').save()
+
+            // set up types
+            // TODO: maps are easy, but you could have collisions
+            [
+                    "official": NameIdentifier,
+                    "personal": EmailAddressIdentifier,
+                    "network": TokenIdentifier,
+                    "guest": TokenIdentifier,
+                    "referenceid": TokenIdentifier
+            ].each { value, target ->
+                if (!Type.findByTargetAndValue(target, value)) {
+                    new Type(target: target, value: value).save()
+                }
             }
         }
     }

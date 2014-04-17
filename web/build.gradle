@@ -18,6 +18,7 @@ repositories {
 dependencies {
     compile project(":model")
     compile project(":service")
+    compile project(":idmatch")
     compile("org.springframework.boot:spring-boot-starter-web")
     runtime("com.h2database:h2:${project."h2.version"}")
     runtime("postgresql:postgresql:${project."postgresql.version"}")
@@ -25,7 +26,7 @@ dependencies {
 
     //This actuator gives all kinds of Boot goodness like metrics, info, beans info, health check, etc. via exposed RESTful
     //endpoints returning JSON data. Usuful during development or perhaps even in production
-    //compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 jar {

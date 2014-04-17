@@ -11,7 +11,7 @@ import groovy.transform.EqualsAndHashCode
 class Identifier {
     SystemOfRecord systemOfRecord
 
-    static belongsTo = [person: Person]
+    // static belongsTo = [person: Person]
 
     Date dateCreated
     Date lastUpdated

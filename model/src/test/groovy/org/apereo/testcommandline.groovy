@@ -59,6 +59,9 @@ class SimpleApplication implements CommandLineRunner {
                 person.wallet.each {
                     println "\there: ${it}: ${it.class}: ${it instanceof TokenIdentifier ? it.token : ""}"
                 }
+                person.nameIdentifiers.each {
+                    println "\tname: ${it}"
+                }
             }
         }
         System.exit(0)

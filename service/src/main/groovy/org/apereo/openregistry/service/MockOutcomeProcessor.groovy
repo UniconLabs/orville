@@ -3,6 +3,7 @@ package org.apereo.openregistry.service
 import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Slf4j
 import org.apereo.openregistry.model.TokenIdentifier
+import org.apereo.openregistry.model.Type
 
 /**
  *
@@ -34,7 +35,7 @@ abstract class MockOutcomeProcessor {
                 ids << [identifier: it.token, type: it.type.value]
             }
             processorContext.outcome.idMatchType = 'CREATED'
-            processorContext.outcome.body = [referenceId: 'M225127891',
+            processorContext.outcome.body = [referenceId: processorContext.person.tokenIdentifiers.find {it.type == Type.findByTargetAndValue(TokenIdentifier, "referenceid")}.token,
                                              identifiers: ids]
             return processorContext
         }
