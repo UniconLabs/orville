@@ -23,14 +23,14 @@ class SimpleStandardizationService implements StandardizationService {
         def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
 
         Person p = new Person()
-        p.baggage << new Baggage(
+        p.addToBaggage (
                 systemOfRecord: systemOfRecord,
                 contents: info
         )
 
         // do names
         info.sorAttributes?.names?.each { nameMap ->
-            p.wallet.add new NameIdentifier(
+            p.addToWallet new NameIdentifier(
                     systemOfRecord: systemOfRecord,
                     type: Type.findByTargetAndValue(NameIdentifier, nameMap.type),
                     name: new Name(
@@ -46,7 +46,7 @@ class SimpleStandardizationService implements StandardizationService {
 
         // do identifiers
         info.sorAttributes?.identifiers?.each { idMap ->
-            p.wallet.add new TokenIdentifier(
+            p.addToWallet new TokenIdentifier(
                     systemOfRecord: systemOfRecord,
                     type: Type.findByTargetAndValue(TokenIdentifier, idMap.type),
                     token: idMap.identifier
@@ -54,7 +54,7 @@ class SimpleStandardizationService implements StandardizationService {
         }
         // do email addresses
         info.sorAttributes?.emailAddresses?.each { emailMap ->
-            p.wallet.add new EmailAddressIdentifier(
+            p.addToWallet new EmailAddressIdentifier(
                     systemOfRecord: systemOfRecord,
                     type: Type.findByTargetAndValue(EmailAddressIdentifier, emailMap.type),
                     emailAddress: emailMap.address

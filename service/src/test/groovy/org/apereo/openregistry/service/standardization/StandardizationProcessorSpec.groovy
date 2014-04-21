@@ -91,23 +91,22 @@ class StandardizationProcessorSpec extends Specification {
 
         where:
         output << [new Person().with {
-            baggage << new Baggage(
+            addToBaggage(
                     systemOfRecord: systemOfRecord,
                     contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>
-
             )
-            wallet << new NameIdentifier(
+            addToWallet new NameIdentifier(
                     type: nameType,
                     name: new Name(
                             givenName: "Pat",
                             familyName: "Lee"
                     )
             )
-            wallet << new EmailAddressIdentifier(
+            addToWallet new EmailAddressIdentifier(
                     type: emailType,
                     emailAddress: 'pat.lee@gmail.com'
             )
-            wallet << new TokenIdentifier(
+            addToWallet new TokenIdentifier(
                     type: networkIdentifierType,
                     token: 'pl53'
             )

@@ -9,10 +9,8 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Person {
-
-    Set<Baggage> baggage = [] as Set<Baggage>
-
-    Set<Identifier> wallet = [] as Set<Identifier>
+    Set<Baggage> baggage
+    Set<Identifier> wallet
 
     Date dateCreated
     Date lastUpdated

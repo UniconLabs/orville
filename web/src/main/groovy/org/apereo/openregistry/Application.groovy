@@ -13,12 +13,16 @@ import org.apereo.openregistry.service.idmatch.IdMatchService
 import org.apereo.openregistry.service.persistence.PersistenceProcessor
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
+import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.codehaus.groovy.grails.orm.hibernate.cfg.HibernateUtils
+import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.context.web.SpringBootServletInitializer
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -89,8 +93,18 @@ class Application extends SpringBootServletInitializer {
 
     @Configuration
     static class BootStrap {
+        @Autowired
+        ApplicationContext applicationContext
+
+        @Autowired
+        SessionFactory sessionFactory
+
+        @Autowired
+        GrailsApplication grailsApplication
+
         @PostConstruct
         def bootstrap() {
+            HibernateUtils.enhanceSessionFactory(sessionFactory, grailsApplication, applicationContext)
             // set up systems of record
             ['test', 'guest', 'idmatch'].each {
                 if (!SystemOfRecord.findByCodeAndActive(it, true)) {
