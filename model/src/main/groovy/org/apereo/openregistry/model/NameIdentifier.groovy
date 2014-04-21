@@ -11,7 +11,7 @@ class NameIdentifier extends Identifier {
     Name name
 
     static constraints = {
-        type validator: { NameIdentifier.isAssignableFrom(it.target) }
+        type validator: Type.typeValidator
     }
 
     static mapping = {

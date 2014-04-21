@@ -12,4 +12,8 @@ class Type {
     static constraints = {
         value unique: 'target'
     }
+
+    static typeValidator = { val, obj ->
+        obj.class.isAssignableFrom(val.target)
+    }
 }

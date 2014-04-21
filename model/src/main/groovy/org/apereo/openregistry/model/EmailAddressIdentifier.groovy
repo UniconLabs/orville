@@ -12,10 +12,7 @@ class EmailAddressIdentifier extends Identifier {
     String emailAddress
 
     static constraints = {
-        type validator: { val, obj ->
-            EmailAddressIdentifier.isAssignableFrom(val.target)
-        }
-
+        type validator: Type.typeValidator
         emailAddress email: true
     }
 }
