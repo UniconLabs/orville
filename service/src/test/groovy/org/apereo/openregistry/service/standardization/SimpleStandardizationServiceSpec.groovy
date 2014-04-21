@@ -80,23 +80,23 @@ class SimpleStandardizationServiceSpec extends Specification {
         networkIdentifierType = new Type(target: TokenIdentifier, value: 'network').save()
 
         fullPerson = new Person().with {
-            baggage << new Baggage(
+            addToBaggage new Baggage(
                     systemOfRecord: systemOfRecord,
                     contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>
 
             )
-            wallet << new NameIdentifier(
+            addToWallet new NameIdentifier(
                     type: nameType,
                     name: new Name(
                             givenName: "Pat",
                             familyName: "Lee"
                     )
             )
-            wallet << new EmailAddressIdentifier(
+            addToWallet new EmailAddressIdentifier(
                     type: emailType,
                     emailAddress: 'pat.lee@gmail.com'
             )
-            wallet << new TokenIdentifier(
+            addToWallet new TokenIdentifier(
                     type: networkIdentifierType,
                     token: 'pl53'
             )
