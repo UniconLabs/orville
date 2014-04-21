@@ -14,7 +14,7 @@ is to do the following after checking out the project:
 
 ## Running the stand-alone jar
 
-1. Download https://github.com/UniconLabs/orville/releases/download/2.0-M1/openregistry-web-2.0.0-M1.jar
+1. Download a release from https://github.com/UniconLabs/orville/releases
 2. Run `java -jar openregistry-web-{version}.jar`
 3. post to http://localhost:8080/v1/sorPeople/test/
 
