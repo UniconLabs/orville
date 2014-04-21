@@ -24,3 +24,5 @@ A sample configuration file is available at https://github.com/UniconLabs/orvill
 ```
 java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/config/openregistry.properties
 ```
+
+**Note:** Currently only the H2 database is supported
