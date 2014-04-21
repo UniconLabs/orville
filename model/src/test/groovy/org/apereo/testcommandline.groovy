@@ -83,6 +83,8 @@ class SimpleApplication implements CommandLineRunner {
                 }
             }
         }
+
+        def test = new TokenIdentifier(systemOfRecord: s, token: "this is another test", type: nameType).save(failOnError: true)
         System.exit(0)
     }
 }

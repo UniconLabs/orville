@@ -6,10 +6,5 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class TokenIdentifier extends Identifier {
-    Type type
     String token
-
-    static constraints = {
-        type validator: Type.typeValidator
-    }
 }

@@ -6,13 +6,9 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class EmailAddressIdentifier extends Identifier {
-
-    Type type
-
     String emailAddress
 
     static constraints = {
-        type validator: Type.typeValidator
         emailAddress email: true
     }
 }

@@ -6,14 +6,26 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Type {
-    Class target
+    String target
     String value
+
+    Class targetClass
 
     static constraints = {
         value unique: 'target'
     }
 
-    static typeValidator = { val, obj ->
-        obj.class.isAssignableFrom(val.target)
+    static transients = ['targetClass']
+
+    Class getTargetClass() {
+        if (target.startsWith("class ")) {
+            return Class.forName(target.substring(6))
+        } else {
+            return Class.forName(target)
+        }
+    }
+
+    static typeValidator = { Type val, obj ->
+        return obj.class.isAssignableFrom(val.targetClass)
     }
 }

@@ -9,9 +9,18 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Identifier {
+    Type type
     SystemOfRecord systemOfRecord
 
     static belongsTo = [person: Person]
+
+    static constraints = {
+        type validator: Type.typeValidator
+    }
+
+    static mapping = {
+        tablePerSubclass true
+    }
 
     Date dateCreated
     Date lastUpdated
