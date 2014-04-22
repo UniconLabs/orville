@@ -1,6 +1,5 @@
 package org.apereo.openregistry
 
-import com.jolbox.bonecp.BoneCPDataSource
 import org.apereo.openregistry.model.*
 import org.apereo.openregistry.service.CompositeOpenRegistryProcessor
 import org.apereo.openregistry.service.MockOutcomeProcessor
@@ -37,18 +36,6 @@ class Application extends SpringBootServletInitializer {
 
     private static applicationClass = Application
 
-    @Value('${database.driver}')
-    String databaseDriver
-
-    @Value('${database.url}')
-    String databaseUrl
-
-    @Value('${database.username}')
-    String databaseUsername
-
-    @Value('${database.password}')
-    String databasePassword
-
     @Autowired
     IdMatchService idMatchService
 
@@ -69,25 +56,14 @@ class Application extends SpringBootServletInitializer {
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
                         new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
+                        //TODO: rely on the real outcome from IdMatch processor and eventually remove this one
                         new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
     }
 
-    /*
-    @Bean(destroyMethod = 'close')
-    DataSource dataSource() {
-        new BoneCPDataSource().with {
-            it.driverClass = this.databaseDriver
-            it.jdbcUrl = this.databaseUrl
-            it.username = this.databaseUsername
-            it.password = this.databasePassword
-            return it
-        }
-    }
-     */
-
     @Configuration
+    //TODO: find a better place for this bootstrap code
     static class BootStrap {
         @PostConstruct
         def bootstrap() {

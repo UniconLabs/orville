@@ -1,7 +1,6 @@
 package org.apereo.openregistry.service.idmatch
 
 import org.apereo.openregistry.model.Baggage
-import org.apereo.openregistry.model.Identifier
 import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.TokenIdentifier
 import org.apereo.openregistry.model.Type
