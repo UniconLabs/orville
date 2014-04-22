@@ -14,6 +14,15 @@ is to do the following after checking out the project:
 
 ## Running the stand-alone jar
 
-1. Download https://github.com/UniconLabs/orville/releases/download/2.0-M1/openregistry-web-2.0.0-M1.jar
-2. Run `java -jar openregistry-web-2.0.0-M1.jar`
+1. Download a release from https://github.com/UniconLabs/orville/releases
+2. Run `java -jar openregistry-web-{version}.jar`
 3. post to http://localhost:8080/v1/sorPeople/test/
+
+## Configuration
+
+A sample configuration file is available at https://github.com/UniconLabs/orville/blob/master/etc/application.properties. To configuration the application, download the file and modify as needed (change idMatch configuration, change database configuration, etc). To run the application with the new configuration, run
+```
+java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/config/openregistry.properties
+```
+
+**Note:** Currently only the H2 database is supported
