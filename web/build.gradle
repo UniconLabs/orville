@@ -20,9 +20,9 @@ dependencies {
     compile project(":service")
     compile project(":idmatch")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
     runtime("com.h2database:h2:${project."h2.version"}")
     runtime("postgresql:postgresql:${project."postgresql.version"}")
-    compile ("com.jolbox:bonecp:${project."bonecp.version"}")
 
     //This actuator gives all kinds of Boot goodness like metrics, info, beans info, health check, etc. via exposed RESTful
     //endpoints returning JSON data. Usuful during development or perhaps even in production
