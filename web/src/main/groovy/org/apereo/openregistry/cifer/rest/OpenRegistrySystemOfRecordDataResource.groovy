@@ -1,22 +1,16 @@
 package org.apereo.openregistry.cifer.rest
 
 import groovy.util.logging.Slf4j
+import org.apereo.openregistry.model.Baggage
 import org.apereo.openregistry.model.SystemOfRecord
-import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
+import org.apereo.openregistry.model.Type
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
-
-import static org.apereo.openregistry.model.request.OpenRegistryProcessingRequest.TYPE
+import org.springframework.web.bind.annotation.*
 
 /**
  * A RESTful resource implementation to handle https://spaces.internet2.edu/display/cifer/SOR-Registry+Strawman+Write+API
@@ -40,10 +34,13 @@ class OpenRegistrySystemOfRecordDataResource {
 
     @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
     def createSorPerson(@RequestBody Map<String, Object> sorRequestData, @PathVariable("sor") String sor) {
-
+        def systemOfRecord = SystemOfRecord.findByActiveAndCode(true, sor)
+        if (!systemOfRecord) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND)
+        }
         OpenRegistryProcessorContext processorCtx = this.openRegistryProcessor.process(
                 new OpenRegistryProcessorContext(request:
-                        new OpenRegistryProcessingRequest(sor: sor, body: sorRequestData, type: TYPE.add)))
+                        new Baggage(systemOfRecord: systemOfRecord, contents: sorRequestData, type: Type.findByTargetAndValue(Baggage, "add"))))
 
         switch (processorCtx.outcome?.idMatchType) {
             case 'OK':

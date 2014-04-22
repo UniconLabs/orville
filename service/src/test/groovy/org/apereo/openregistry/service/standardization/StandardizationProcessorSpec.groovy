@@ -2,15 +2,7 @@ package org.apereo.openregistry.service.standardization
 
 import groovy.json.JsonSlurper
 import org.apereo.openregistry.TestApplication
-import org.apereo.openregistry.model.Baggage
-import org.apereo.openregistry.model.EmailAddressIdentifier
-import org.apereo.openregistry.model.Name
-import org.apereo.openregistry.model.NameIdentifier
-import org.apereo.openregistry.model.Person
-import org.apereo.openregistry.model.SystemOfRecord
-import org.apereo.openregistry.model.TokenIdentifier
-import org.apereo.openregistry.model.Type
-import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
+import org.apereo.openregistry.model.*
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.springframework.boot.SpringApplication
 import org.springframework.context.ConfigurableApplicationContext
@@ -81,10 +73,10 @@ class StandardizationProcessorSpec extends Specification {
     def "test processor"() {
         expect:
         def processorContext = new OpenRegistryProcessorContext(
-            request: new OpenRegistryProcessingRequest(
-                    body: sampleJson,
-                    sor: "test"
-            )
+                request: new Baggage(
+                        contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>,
+                        systemOfRecord: SystemOfRecord.findByActiveAndCode(true, 'test')
+                )
         )
         standardizationProcessor.process(processorContext)
         processorContext.person == output

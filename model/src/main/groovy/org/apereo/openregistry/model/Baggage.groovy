@@ -14,12 +14,14 @@ class Baggage {
     SystemOfRecord systemOfRecord
     Map<String,Object> contents
     String baggageAsString
+    Type type
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
         baggageAsString maxSize: 64000, nullable: true
+        type validator: Type.typeValidator
     }
 
     static transients = ['contents']

@@ -1,6 +1,7 @@
 package org.apereo.openregistry.service.identification
 
 import org.apereo.openregistry.model.Person
+import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.TokenIdentifier
 
 /**
@@ -13,4 +14,5 @@ import org.apereo.openregistry.model.TokenIdentifier
 public interface TokenIdentifierService {
 
     TokenIdentifier createFor(String systemOfRecord, Person person, String identifierType)
+    TokenIdentifier createFor(SystemOfRecord systemOfRecord, Person person, String identifierType)
 }

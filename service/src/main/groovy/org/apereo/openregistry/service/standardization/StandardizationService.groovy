@@ -1,6 +1,7 @@
 package org.apereo.openregistry.service.standardization
 
 import org.apereo.openregistry.model.Person
+import org.apereo.openregistry.model.SystemOfRecord
 
 /**
  * Inteface for standardization.
@@ -15,4 +16,7 @@ public interface StandardizationService {
      */
     Person standardize(String systemOfRecordCode, String jsonBody)
     Person standardize(String systemOfRecordCode, Map request)
+
+    Person standardize(SystemOfRecord systemOfRecord, String jsonBody)
+    Person standardize(SystemOfRecord systemOfRecord, Map request)
 }

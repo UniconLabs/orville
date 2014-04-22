@@ -1,8 +1,8 @@
 package org.apereo.openregistry.service
 
 import groovy.transform.ToString
+import org.apereo.openregistry.model.Baggage
 import org.apereo.openregistry.model.Person
-import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 
 /**
  *
@@ -11,7 +11,7 @@ import org.apereo.openregistry.model.request.OpenRegistryProcessingRequest
 @ToString
 class OpenRegistryProcessorContext {
 
-    OpenRegistryProcessingRequest request
+    Baggage request
 
     /**
      * Encapsulates the state pertaining to the outcome of open registry processing request.

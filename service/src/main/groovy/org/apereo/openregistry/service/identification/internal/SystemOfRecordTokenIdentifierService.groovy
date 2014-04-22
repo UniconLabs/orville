@@ -26,10 +26,15 @@ class SystemOfRecordTokenIdentifierService implements TokenIdentifierService {
     }
 
     @Override
-    TokenIdentifier createFor(String systemOfRecord, Person person, String tokenIdentifierType) {
+    TokenIdentifier createFor(String systemOfRecord, Person person, String identifierType) {
+        createFor(SystemOfRecord.findByCode(systemOfRecord) ?: new SystemOfRecord(code: systemOfRecord, active: true), person, identifierType)
+    }
+
+    @Override
+    TokenIdentifier createFor(SystemOfRecord systemOfRecord, Person person, String identifierType) {
         new TokenIdentifier(
-                systemOfRecord: SystemOfRecord.findByCode(systemOfRecord) ?: new SystemOfRecord(code: systemOfRecord, active: true),
-                token: this.prefix + this.tokenGeneratorStrategy.generateToken(),
-                type: Type.findByTargetAndValue(TokenIdentifier, tokenIdentifierType))
+            systemOfRecord: systemOfRecord,
+            token: this.prefix + this.tokenGeneratorStrategy.generateToken(),
+            type: Type.findByTargetAndValue(TokenIdentifier, identifierType))
     }
 }

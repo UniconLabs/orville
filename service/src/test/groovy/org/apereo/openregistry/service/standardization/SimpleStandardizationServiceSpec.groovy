@@ -80,11 +80,6 @@ class SimpleStandardizationServiceSpec extends Specification {
         networkIdentifierType = new Type(target: TokenIdentifier, value: 'network').save()
 
         fullPerson = new Person().with {
-            addToBaggage new Baggage(
-                    systemOfRecord: systemOfRecord,
-                    contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>
-
-            )
             addToWallet new NameIdentifier(
                     type: nameType,
                     name: new Name(
@@ -106,7 +101,7 @@ class SimpleStandardizationServiceSpec extends Specification {
 
     def "simple test"() {
         expect:
-        standardizationService.standardize('test', '') == new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
+        standardizationService.standardize('test', '') == new Person()
     }
 
     def "simple failure test"() {

@@ -20,14 +20,26 @@ class SimpleStandardizationService implements StandardizationService {
 
     @Override
     Person standardize(String systemOfRecordCode, Map info) {
-        def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
+        return standardize(SystemOfRecord.findByActiveAndCode(true, systemOfRecordCode), info)
+    }
 
+    @Override
+    Person standardize(String systemOfRecordCode, String jsonBody) {
+        return standardize(SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true), jsonBody)
+    }
+
+    @Override
+    Person standardize(SystemOfRecord systemOfRecord, String jsonBody) {
+        if (!jsonBody || jsonBody == '') {
+            return new Person()
+        }
+        def info = new JsonSlurper().parseText(jsonBody) as Map<String, Object>
+        return standardize(systemOfRecord, info)
+    }
+
+    @Override
+    Person standardize(SystemOfRecord systemOfRecord, Map info) {
         Person p = new Person()
-        p.addToBaggage (
-                systemOfRecord: systemOfRecord,
-                contents: info
-        )
-
         // do names
         info.sorAttributes?.names?.each { nameMap ->
             p.addToWallet new NameIdentifier(
@@ -62,15 +74,5 @@ class SimpleStandardizationService implements StandardizationService {
         }
 
         return p
-    }
-
-    @Override
-    Person standardize(String systemOfRecordCode, String jsonBody) {
-        if (!jsonBody || jsonBody == '') {
-            def systemOfRecord = SystemOfRecord.findByCodeAndActive(systemOfRecordCode, true)
-            return new Person(baggage: [new Baggage(systemOfRecord: systemOfRecord)])
-        }
-        def info = new JsonSlurper().parseText(jsonBody) as Map<String, Object>
-        return standardize(systemOfRecordCode, info)
     }
 }
