@@ -19,6 +19,7 @@ dependencies {
     compile project(":model")
     compile project(":service")
     compile project(":idmatch")
+    compile project(":notification")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-jdbc")
     runtime("com.h2database:h2:${project."h2.version"}")

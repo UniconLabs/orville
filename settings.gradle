@@ -4,3 +4,5 @@ include "model"
 include "service"
 include "idmatch"
 include "web"
+include "notification"
+

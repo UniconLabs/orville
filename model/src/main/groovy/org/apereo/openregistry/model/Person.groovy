@@ -106,4 +106,19 @@ class Person {
         }
         return this
     }
+
+    /**
+     * Business method that returns the highest baggage id (persistence id) out of all baggage entities associated
+     * with this person. Useful for example in situations that this id could be used as some kind of a sequential serial number
+     * representing the latest state snapshot id at any given point for this person entity.
+     *
+     * @return max Baggage#id from the collection of baggage entities attached to this entity instance
+     */
+    Long getHighestBaggageId() {
+        this.baggage.collect { it.id }.max()
+    }
+
+    String getLastUpdatedDateAsUtcFormattedString() {
+        this.lastUpdated.format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone('UTC'))
+    }
 }

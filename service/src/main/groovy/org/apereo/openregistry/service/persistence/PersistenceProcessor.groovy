@@ -17,6 +17,7 @@ class PersistenceProcessor implements OpenRegistryProcessor {
                     processorContext.person = p
                 }
                 else {
+                    //TODO: need more robust validation error handling than this
                     processorContext.person.errors.each {
                         println "ERROR ===============> ${it.fieldError.toString()}"
                     }
