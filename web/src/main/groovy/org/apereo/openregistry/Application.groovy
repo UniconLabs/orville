@@ -95,7 +95,10 @@ class Application extends SpringBootServletInitializer {
                     "personal": EmailAddressIdentifier,
                     "network": TokenIdentifier,
                     "guest": TokenIdentifier,
-                    "referenceid": TokenIdentifier
+                    "referenceid": TokenIdentifier,
+                    "add": Baggage,
+                    "delete": Baggage,
+                    "update": Baggage
             ].each { value, target ->
                 if (!Type.findByTargetAndValue(target, value)) {
                     new Type(target: target, value: value).save()
