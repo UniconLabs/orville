@@ -16,6 +16,7 @@ class Identifier {
 
     static constraints = {
         type validator: Type.typeValidator
+        person nullable: true
     }
 
     static mapping = {

@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":model")
+    compile project(":service")
+
+    compile("org.grails:gorm-hibernate4-spring-boot:${project."spring-boot-gorm-hibernate.version"}")
+}

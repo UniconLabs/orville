@@ -4,12 +4,15 @@ import org.apereo.openregistry.model.*
 import org.apereo.openregistry.service.CompositeOpenRegistryProcessor
 import org.apereo.openregistry.service.MockOutcomeProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessor
+import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGeneratorStrategy
 import org.apereo.openregistry.service.identification.internal.SystemOfRecordTokenIdentifierService
 import org.apereo.openregistry.service.idmatch.IdMatchProcessor
 import org.apereo.openregistry.service.idmatch.IdMatchService
 import org.apereo.openregistry.service.persistence.PersistenceProcessor
+import org.apereo.openregistry.service.standardization.GuestRoleStandardizationProcessor
+import org.apereo.openregistry.service.standardization.GuestRoleStandardizationService
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
 import org.codehaus.groovy.grails.commons.GrailsApplication
@@ -56,12 +59,24 @@ class Application extends SpringBootServletInitializer {
     @Bean
     OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
-                        //new ReconciliationProcessor(),
-                        new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
-                        new IdMatchProcessor(idMatchService: idMatchService),
+                        // new ReconciliationProcessor(),
+                        // new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest'),
+                        new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
+                        // new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
                         //TODO: rely on the real outcome from IdMatch processor and eventually remove this one
-                        new MockOutcomeProcessor.AddPersonMockOutcome_201()] as LinkedHashSet
+                        new MockOutcomeProcessor.AddPersonMockOutcome_201(),
+                        //TODO: move this elsewhere when we figure the outcome
+                        new OpenRegistryProcessor(){
+                            @Override
+                            OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
+                                def guestId = processorContext.person.wallet.find {it.type == Type.findByTargetAndValue(Role, 'guest')}
+                                if (guestId) {
+                                    processorContext.outcome.body['identifiers'] << [identifier: guestId.id, type: "sor"]
+                                }
+                                return processorContext
+                            }
+                        }] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
     }
@@ -94,7 +109,7 @@ class Application extends SpringBootServletInitializer {
                     "official": NameIdentifier,
                     "personal": EmailAddressIdentifier,
                     "network": TokenIdentifier,
-                    "guest": TokenIdentifier,
+                    "guest": Role,
                     "referenceid": TokenIdentifier,
                     "add": Baggage,
                     "delete": Baggage,

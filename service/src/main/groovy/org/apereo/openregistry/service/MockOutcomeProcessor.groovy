@@ -34,11 +34,11 @@ abstract class MockOutcomeProcessor {
             processorContext.person.getTokenIdentifiers().each {
                 ids << [identifier: it.token, type: it.type.value]
             }
-
-            // 'cause they needed the sor id separate.....
+            /*
             processorContext.person.tokenIdentifiers.find { it.type == Type.findByTargetAndValue(TokenIdentifier, "guest")}.with {
-                ids << [identifier: it.token, type: "sor"]
+                ids << [identifier: it.id, type: "sor"]
             }
+             */
 
             processorContext.outcome.idMatchType = 'CREATED'
             processorContext.outcome.body = [identifiers: ids]
