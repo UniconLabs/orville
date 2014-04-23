@@ -101,27 +101,18 @@ class SimpleStandardizationServiceSpec extends Specification {
 
     def "simple test"() {
         expect:
-        standardizationService.standardize('test', '') == new Person()
+        standardizationService.standardize(systemOfRecord, [:]) == new Person()
     }
 
     def "simple failure test"() {
         expect:
-        standardizationService.standardize('test', '') != new Person(baggage: [new Baggage(systemOfRecord: new SystemOfRecord(code: 'nottest', active: true).save())])
-    }
-
-    def "test json standardization"() {
-        expect:
-        def x = standardizationService.standardize('test', sampleJson)
-        x == output
-
-        where:
-        output << [fullPerson]
+        standardizationService.standardize(systemOfRecord, [:]) != new Person(baggage: [new Baggage(systemOfRecord: new SystemOfRecord(code: 'nottest', active: true).save())])
     }
 
     def "test map standardization"() {
         expect:
         def map = new JsonSlurper().parseText(sampleJson)
-        standardizationService.standardize('test', map) == output
+        standardizationService.standardize(systemOfRecord, map) == output
 
         where:
         output << [fullPerson]

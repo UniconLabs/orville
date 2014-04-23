@@ -8,15 +8,12 @@ import org.apereo.openregistry.model.SystemOfRecord
  */
 public interface StandardizationService {
     /**
-     * Given a system of record code and a JSON body, returns a Person
+     * Given a SystemOfRecord and a request Map returns a Person. The service should map the json map to propeties of
+     * Person.
      *
-     * @param systemOfRecordCode
-     * @param jsonBody
+     * @param systemOfRecord
+     * @param request
      * @return
      */
-    Person standardize(String systemOfRecordCode, String jsonBody)
-    Person standardize(String systemOfRecordCode, Map request)
-
-    Person standardize(SystemOfRecord systemOfRecord, String jsonBody)
     Person standardize(SystemOfRecord systemOfRecord, Map request)
 }
