@@ -1,7 +1,6 @@
 package org.apereo.openregistry.service.idmatch
 
 import org.apereo.openregistry.model.Baggage
-import org.apereo.openregistry.model.Identifier
 import org.apereo.openregistry.model.SystemOfRecord
 import org.apereo.openregistry.model.TokenIdentifier
 import org.apereo.openregistry.model.Type
@@ -22,8 +21,9 @@ class IdMatchProcessor implements OpenRegistryProcessor {
             throw new IllegalStateException("empty response")
         }
         def sor = SystemOfRecord.findByCodeAndActive("idmatch", true)
-        processorContext.person.wallet << new TokenIdentifier(systemOfRecord: sor, type: Type.findByTargetAndValue(TokenIdentifier, "referenceid"), token: response.referenceId)
-        processorContext.person.baggage << new Baggage(systemOfRecord: sor, contents: response.fullResponse)
+        processorContext.person.addToWallet new TokenIdentifier(systemOfRecord: sor, type: Type.findByTargetAndValue(TokenIdentifier, "referenceid"), token: response.referenceId)
+        //TODO: define proper idMatch baggage type
+        processorContext.person.addToBaggage new Baggage(systemOfRecord: sor, contents: response.fullResponse, type: Type.findByTargetAndValue(Baggage, "add"))
         processorContext.outcome.idMatchType = response.status
 
         return processorContext

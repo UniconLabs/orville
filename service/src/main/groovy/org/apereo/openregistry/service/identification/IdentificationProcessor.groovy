@@ -25,7 +25,7 @@ class IdentificationProcessor implements OpenRegistryProcessor {
     @Override
     OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
         log.info("Starting 'identification' processing phase with [$processorContext]")
-        processorContext.person.wallet << this.tokenIdentifierService.createFor(processorContext.request.systemOfRecord, processorContext.person, identifierType)
+        processorContext.person.addToWallet this.tokenIdentifierService.createFor(processorContext.request.systemOfRecord, processorContext.person, identifierType)
         return processorContext
     }
 }
