@@ -21,7 +21,12 @@ class StandardizationProcessor implements OpenRegistryProcessor {
     @Override
     OpenRegistryProcessorContext process(OpenRegistryProcessorContext processorContext) {
         log.info("Starting 'standardization' processing phase with [$processorContext]")
-        processorContext.person = standardizationService.standardize(processorContext.request.systemOfRecord, processorContext.request.contents)
+        def nPerson = standardizationService.standardize(processorContext.request.systemOfRecord, processorContext.request.contents)
+        if (processorContext.person) {
+            processorContext.person << nPerson
+        } else {
+            processorContext.person = nPerson
+        }
         processorContext.person.addToBaggage(processorContext.request)
         return processorContext
     }
