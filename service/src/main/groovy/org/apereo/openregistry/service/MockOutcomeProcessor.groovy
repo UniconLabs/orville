@@ -41,8 +41,12 @@ abstract class MockOutcomeProcessor {
             }
 
             processorContext.outcome.idMatchType = 'CREATED'
-            processorContext.outcome.body = [referenceId: processorContext.person.tokenIdentifiers.find {it.type == Type.findByTargetAndValue(TokenIdentifier, "referenceid")}.token,
-                                             identifiers: ids]
+            processorContext.outcome.body = [identifiers: ids]
+
+            def referenceid = processorContext.person.tokenIdentifiers.find { it.type == Type.findByTargetAndValue(TokenIdentifier, "referenceid")}
+            if (referenceid) {
+                processorContext.outcome.body['referenceId'] = referenceid.token
+            }
             return processorContext
         }
     }
