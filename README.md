@@ -20,7 +20,7 @@ is to do the following after checking out the project:
 
 ## Configuration
 
-A sample configuration file is available at https://github.com/UniconLabs/orville/blob/master/web/src/main/resources/application.properties. To configuration the application, download the file and modify as needed (change idMatch configuration, change database configuration, etc). To run the application with the new configuration, run
+A sample configuration file is available at https://github.com/UniconLabs/orville/blob/master/web/src/main/resources/application.properties. To configure the application, download the file and modify as needed (change idMatch configuration, change database configuration, etc). To run the application with the new configuration, run
 ```
 java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/config/openregistry.properties
 ```
