@@ -13,4 +13,8 @@ class Role extends Identifier {
         sponsor nullable: true
         expiration nullable: true
     }
+
+    static mapping = {
+        sponsor cascade: "all"
+    }
 }

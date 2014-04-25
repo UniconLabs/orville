@@ -34,14 +34,20 @@ abstract class MockOutcomeProcessor {
             processorContext.person.getTokenIdentifiers().each {
                 ids << [identifier: it.token, type: it.type.value]
             }
-            /*
-            processorContext.person.tokenIdentifiers.find { it.type == Type.findByTargetAndValue(TokenIdentifier, "guest")}.with {
-                ids << [identifier: it.id, type: "sor"]
+            // separate the sor Id for the person
+            processorContext.person.tokenIdentifiers.find { it.type == Type.findByTargetAndValue(TokenIdentifier, "guest-sor")}.with {
+                ids << [identifier: it.token, type: "sor"]
             }
-             */
 
             processorContext.outcome.idMatchType = 'CREATED'
-            processorContext.outcome.body = [identifiers: ids]
+            if (!processorContext.outcome.body) {
+                processorContext.outcome.body = [:]
+            }
+            if (!processorContext.outcome.body.identifiers) {
+                processorContext.outcome.body.identifiers = []
+            }
+            // processorContext.outcome.body = [identifiers: ids]
+            processorContext.outcome.body.identifiers.addAll(ids)
 
             def referenceid = processorContext.person.tokenIdentifiers.find { it.type == Type.findByTargetAndValue(TokenIdentifier, "referenceid")}
             if (referenceid) {
