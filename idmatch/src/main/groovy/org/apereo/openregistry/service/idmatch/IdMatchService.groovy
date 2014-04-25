@@ -55,7 +55,7 @@ class IdMatchService {
             def builder = new JsonBuilder()
             builder.sorAttributes {
                 names person.nameIdentifiers.collect { NameIdentifier nameId -> ["type": nameId.type.value, "given": nameId.name.givenName, "family": nameId.name.familyName] }
-                identifiers(person.tokenIdentifiers.collect {TokenIdentifier id -> ["type": id.type.value, "identifier": ${id.token}]} + ["type": "sor", "identifier": sorId])
+                identifiers(person.tokenIdentifiers.collect {TokenIdentifier id -> ["type": id.type.value, "identifier": id.token]} + ["type": "sor", "identifier": sorId])
             }
             def path = "${serviceConfig.version}/people/${sor.toLowerCase()}/${sorId}"
             def resp = restClient.put(

@@ -66,10 +66,9 @@ class Application extends SpringBootServletInitializer {
                         new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
                         new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
-                        new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties))] as LinkedHashSet
-                        //TODO: rely on the real outcome from IdMatch processor and eventually remove this one
-                        new MockOutcomeProcessor.AddPersonMockOutcome_201(),
-                        new RoleOutcomeProcessor()] as LinkedHashSet
+                        new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
+                        // new RoleOutcomeProcessor()
+        ] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
     }
