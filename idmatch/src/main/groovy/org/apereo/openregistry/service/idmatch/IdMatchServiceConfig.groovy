@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 
+import javax.annotation.PostConstruct
+
 @Component
 class IdMatchServiceConfig {
     @Value('${idMatch.baseUrl}')
@@ -20,4 +22,9 @@ class IdMatchServiceConfig {
 
     @Value('${idMatch.preempt}')
     boolean preempt
+
+    @PostConstruct
+    void validate() {
+        assert baseUrl.endsWith('/') : "baseUrl must end in '/'"
+    }
 }
