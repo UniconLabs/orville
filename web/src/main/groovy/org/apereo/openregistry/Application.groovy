@@ -16,11 +16,13 @@ import org.apereo.openregistry.service.standardization.GuestRoleStandardizationP
 import org.apereo.openregistry.service.standardization.GuestRoleStandardizationService
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
+import org.apereo.openregistry.service.notification.internal.HttpPutNotificationService
+import org.apereo.openregistry.service.notification.NotificationProcessor
+import org.apereo.openregistry.service.notification.NotificationServiceConfigProperties
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.orm.hibernate.cfg.HibernateUtils
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
@@ -31,7 +33,6 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 
 import javax.annotation.PostConstruct
-import javax.sql.DataSource
 
 /**
  *
@@ -44,9 +45,6 @@ class Application extends SpringBootServletInitializer {
 
     private static applicationClass = Application
 
-    @Autowired
-    IdMatchService idMatchService
-
     public static void main(String[] args) {
         def application = new SpringApplication(applicationClass)
         application.run(args)
@@ -58,13 +56,17 @@ class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    OpenRegistryProcessor defaultOpenRegistryProcessingEngine() {
+    OpenRegistryProcessor defaultOpenRegistryProcessingEngine(IdMatchService idMatchService,
+                                                              NotificationServiceConfigProperties notificationServiceConfigProperties) {
+
+
         def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
                         // new ReconciliationProcessor(),
                         new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest-sor'),
                         new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
                         new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
+                        new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties))] as LinkedHashSet
                         //TODO: rely on the real outcome from IdMatch processor and eventually remove this one
                         new MockOutcomeProcessor.AddPersonMockOutcome_201(),
                         new RoleOutcomeProcessor()] as LinkedHashSet

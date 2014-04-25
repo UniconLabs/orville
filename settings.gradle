@@ -5,3 +5,5 @@ include "service"
 include "idmatch"
 include "role"
 include "web"
+include "notification"
+
