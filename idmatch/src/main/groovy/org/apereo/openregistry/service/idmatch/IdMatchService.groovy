@@ -28,7 +28,7 @@ class IdMatchService {
         restClient = new RESTClient(serviceConfig.baseUrl)
         if (serviceConfig.preempt) {
             // TODO: check the security of this
-            restClient.headers['Authorization'] = "Basic ${"test:matchtest".bytes.encodeBase64()}"
+            restClient.headers['Authorization'] = "Basic ${"${serviceConfig.username}:${serviceConfig.password}".bytes.encodeBase64()}"
         } else {
             restClient.auth.basic serviceConfig.username, serviceConfig.password
         }

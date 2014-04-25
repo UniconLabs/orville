@@ -15,7 +15,7 @@ is to do the following after checking out the project:
 ## Running the stand-alone jar
 
 1. Download a release from https://github.com/UniconLabs/orville/releases
-2. Run `java -jar openregistry-web-{version}.jar`
+2. Run `java -jar openregistry-web-{version}.jar`. *Note:* M2 requires that the system be run with an external configuration file as describe in the [Configuration](#configuration) section.
 3. post to http://localhost:8080/v1/sorPeople/test/
 
 ## Configuration
