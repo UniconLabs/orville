@@ -1,7 +1,6 @@
 # Open Registry 2
 
-This software is in the early development status. During development the simplest way to run on the console (which will have the REST API implementation)
-is to do the following after checking out the project:
+This software is in the development status.
 
 ## Running the stand-alone jar
 
@@ -15,5 +14,23 @@ A sample configuration file is available at https://github.com/UniconLabs/orvill
 ```
 java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/config/openregistry.properties
 ```
+
+## Security
+
+The HTTP Basic Auth security for Orville REST endpoints is enabled by default. Without providing a valid username:password base64 encoded value
+in HTTP `Authorization` header while invoking Orvile HTTP resources, the server will return an HTTP `401` error code.
+
+The configuration is controlled by the following properties
+(either in the classpath `application.properties` or an externalized properties file as described above):
+
+```bash
+security.user.name=user
+security.user.password=user
+```
+
+In the `application.properties` included in the classpath, username `user`, and password `user` is used.
+Adjust these with more robust username/password values as necessary.
+
+## Database backend
 
 **Note:** Currently only the H2 database is supported
