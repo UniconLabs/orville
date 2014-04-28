@@ -66,7 +66,7 @@ class Application extends SpringBootServletInitializer {
                         new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
                         new IdMatchProcessor(idMatchService: idMatchService),
                         new PersistenceProcessor(),
-                        new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
+                        // new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
                         // new RoleOutcomeProcessor()
         ] as LinkedHashSet
 
