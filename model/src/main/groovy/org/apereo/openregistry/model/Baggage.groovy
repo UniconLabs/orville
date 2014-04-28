@@ -11,6 +11,7 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Baggage {
+    String id
     SystemOfRecord systemOfRecord
     Map<String,Object> contents
     String baggageAsString
@@ -22,6 +23,10 @@ class Baggage {
     static constraints = {
         baggageAsString maxSize: 64000, nullable: true
         type validator: Type.typeValidator
+    }
+
+    static mapping = {
+        id generator: 'uuid'
     }
 
     static transients = ['contents']

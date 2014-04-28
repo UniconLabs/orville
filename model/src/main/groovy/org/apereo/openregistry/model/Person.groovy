@@ -9,6 +9,7 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Person {
+    String id
     Set<Baggage> baggage
     Set<Identifier> wallet
 
@@ -18,6 +19,7 @@ class Person {
     static hasMany = [baggage: Baggage, wallet: Identifier]
 
     static mapping = {
+        id generator: 'uuid'
         wallet cascade: 'all-delete-orphan'
         baggage cascade: 'all-delete-orphan'
     }
@@ -119,6 +121,7 @@ class Person {
     }
 
     String getLastUpdatedDateAsUtcFormattedString() {
+        //TODO: consider using javax.xml.bind.DatatypeConverter
         this.lastUpdated.format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone('UTC'))
     }
 }

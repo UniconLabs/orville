@@ -9,6 +9,7 @@ import groovy.transform.EqualsAndHashCode
 @Entity
 @EqualsAndHashCode
 class Identifier {
+    String id
     Type type
     SystemOfRecord systemOfRecord
 
@@ -21,6 +22,7 @@ class Identifier {
 
     static mapping = {
         tablePerSubclass true
+        id generator: 'uuid'
     }
 
     Date dateCreated
