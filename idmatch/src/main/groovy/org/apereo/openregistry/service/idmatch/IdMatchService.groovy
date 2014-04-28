@@ -58,12 +58,13 @@ class IdMatchService {
                 identifiers(person.tokenIdentifiers.collect {TokenIdentifier id -> ["type": id.type.value, "identifier": id.token]} + ["type": "sor", "identifier": sorId])
             }
             def path = "${serviceConfig.version}/people/${sor.toLowerCase()}/${sorId}"
+            println "here: ${builder.toPrettyString()}"
             def resp = restClient.put(
                     path: path,
                     body: builder.toString(),
                     requestContentType: ContentType.JSON
             )
-            return new IdMatchServiceResponse(status: IdMatchServiceResponse.Status.OK, referenceId: resp.data.referenceId, fullResponse: resp.data)
+            return new IdMatchServiceResponse(status: IdMatchServiceResponse.Status.getStatusFromInt(resp.status), referenceId: resp.data.referenceId, fullResponse: resp.data)
         } catch (def e) {
             log.error(e.message, e)
         }
