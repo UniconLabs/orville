@@ -7,7 +7,7 @@ import groovy.transform.EqualsAndHashCode
  * A person's identifier from a system of record
  */
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(excludes = ["person"])
 class Identifier {
     String id
     Type type

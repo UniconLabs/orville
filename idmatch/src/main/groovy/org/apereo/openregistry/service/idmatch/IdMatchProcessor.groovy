@@ -23,6 +23,10 @@ class IdMatchProcessor implements OpenRegistryProcessor {
         def sor = SystemOfRecord.findByCodeAndActive("idmatch", true)
         processorContext.person.addToWallet new TokenIdentifier(systemOfRecord: sor, type: Type.findByTargetAndValue(TokenIdentifier, "referenceid"), token: response.referenceId)
 
+        response.fullResponse.identifiers.each {
+            processorContext.person.addToWallet new TokenIdentifier(systemOfRecord: sor, type: Type.findByTargetAndValue(TokenIdentifier, it.type), token: it.identifier)
+        }
+
         processorContext.person.addToBaggage new Baggage(systemOfRecord: sor, contents: response.fullResponse, type: Type.findByTargetAndValue(Baggage, "add"))
         processorContext.outcome.idMatchType = response.status
 
