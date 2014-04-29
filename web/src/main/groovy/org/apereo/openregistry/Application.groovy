@@ -19,6 +19,7 @@ import org.apereo.openregistry.service.standardization.StandardizationProcessor
 import org.apereo.openregistry.service.notification.internal.HttpPutNotificationService
 import org.apereo.openregistry.service.notification.NotificationProcessor
 import org.apereo.openregistry.service.notification.NotificationServiceConfigProperties
+import org.apereo.openregistry.service.standardization.UpdateStandardizationProcessor
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.orm.hibernate.cfg.HibernateUtils
 import org.hibernate.SessionFactory
@@ -61,17 +62,26 @@ class Application extends SpringBootServletInitializer {
                                                               NotificationServiceConfigProperties notificationServiceConfigProperties) {
 
 
-        def pipeline = [new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
-                        // new ReconciliationProcessor(),
-                        new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest-sor'),
-                        new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
-                        new IdMatchProcessor(idMatchService: idMatchService),
-                        new PersistenceProcessor(),
-                        // new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
-                        // new RoleOutcomeProcessor()
+        def pipeline = [
+                new StandardizationProcessor(standardizationService: new SimpleStandardizationService()),
+                // new ReconciliationProcessor(),
+                new IdentificationProcessor(new SystemOfRecordTokenIdentifierService('', new RandomUUIDTokenGeneratorStrategy()), 'guest-sor'),
+                new GuestRoleStandardizationProcessor(guestRoleStandardizationService: new GuestRoleStandardizationService()),
+                new IdMatchProcessor(idMatchService: idMatchService),
+                new PersistenceProcessor(),
+                // new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
+                // new RoleOutcomeProcessor()
         ] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
+    }
+
+    @Bean
+    OpenRegistryProcessor updateProcessor() {
+        new CompositeOpenRegistryProcessor([
+                new UpdateStandardizationProcessor(),
+                new PersistenceProcessor()
+        ] as LinkedHashSet)
     }
 
     @Configuration

@@ -13,6 +13,7 @@ import org.apereo.openregistry.model.Type
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -29,7 +30,12 @@ import javax.xml.bind.DatatypeConverter
 class OpenRegistrySystemOfRecordDataResource {
 
     @Autowired
+    @Qualifier("defaultOpenRegistryProcessingEngine")
     private OpenRegistryProcessor openRegistryProcessor
+
+    @Autowired
+    @Qualifier("updateProcessor")
+    OpenRegistryProcessor updateProcessor
 
     @RequestMapping(method = RequestMethod.GET, value = "/people", produces = MediaType.APPLICATION_JSON_VALUE)
     def getPeople(@RequestParam(value = "sponsor", required = false) String sponsor, @RequestParam(value = "validThrough", required = false) String validThrough) {
@@ -128,12 +134,27 @@ class OpenRegistrySystemOfRecordDataResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/sorPeople/{sor}/{sorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     def updateSorPerson(
             @RequestBody Map<String, Object> sorRequestData,
             @PathVariable("sor") String sor, @PathVariable("sorId") String personSorId) {
-
-        //TODO: implement when mode business requirements details are available. HTTP 501 (not implemented) for now...
+        Person.withTransaction {
+            def systemOfRecord = SystemOfRecord.findByActiveAndCode(true, sor)
+            if (!systemOfRecord) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND)
+            }
+            def person = TokenIdentifier.findByTypeAndSystemOfRecordAndToken(
+                    Type.findByTargetAndValue(TokenIdentifier, "guest-sor"),
+                    SystemOfRecord.findByCodeAndActive(sor, true),
+                    personSorId
+            )?.person
+            if (!person) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND)
+            }
+            sorRequestData["resource"] = "/v1/sorPeople/${sor}/${personSorId}"
+            updateProcessor.process(new OpenRegistryProcessorContext(
+                    request: new Baggage(systemOfRecord: systemOfRecord, contents: sorRequestData, type: Type.findByTargetAndValue(Baggage, "update"))
+            ))
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/sorPeople/{sor}", consumes = MediaType.APPLICATION_JSON_VALUE)
