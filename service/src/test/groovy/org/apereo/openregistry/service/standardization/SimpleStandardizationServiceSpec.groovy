@@ -4,6 +4,7 @@ import groovy.json.JsonSlurper
 import org.apereo.openregistry.TestApplication
 import org.apereo.openregistry.model.Baggage
 import org.apereo.openregistry.model.EmailAddressIdentifier
+import org.apereo.openregistry.model.Identifier
 import org.apereo.openregistry.model.Name
 import org.apereo.openregistry.model.NameIdentifier
 import org.apereo.openregistry.model.Person
@@ -81,6 +82,7 @@ class SimpleStandardizationServiceSpec extends Specification {
 
         fullPerson = new Person().with {
             addToWallet new NameIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: nameType,
                     name: new Name(
                             givenName: "Pat",
@@ -88,10 +90,12 @@ class SimpleStandardizationServiceSpec extends Specification {
                     )
             )
             addToWallet new EmailAddressIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: emailType,
                     emailAddress: 'pat.lee@gmail.com'
             )
             addToWallet new TokenIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: networkIdentifierType,
                     token: 'pl53'
             )
@@ -112,7 +116,7 @@ class SimpleStandardizationServiceSpec extends Specification {
     def "test map standardization"() {
         expect:
         def map = new JsonSlurper().parseText(sampleJson)
-        standardizationService.standardize(systemOfRecord, map) == output
+standardizationService.standardize(systemOfRecord, map) == output
 
         where:
         output << [fullPerson]

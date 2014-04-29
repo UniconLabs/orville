@@ -4,7 +4,7 @@ import grails.persistence.Entity
 import groovy.transform.EqualsAndHashCode
 
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 class EmailAddressIdentifier extends Identifier {
     String emailAddress
 

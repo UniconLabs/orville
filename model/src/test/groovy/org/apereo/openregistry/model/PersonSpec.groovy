@@ -27,4 +27,13 @@ class PersonSpec extends Specification {
         b << [new Person().addToWallet(new TokenIdentifier(token: "me")), new Person(), new Person().addToWallet(new TokenIdentifier(token: "test")), new Person()]
         c << [new Person().addToWallet(new TokenIdentifier(token: "test")).addToWallet(new TokenIdentifier(token: "me")), new Person(), new Person().addToWallet(new TokenIdentifier(token: "test")), new Person().addToWallet(new TokenIdentifier(token: "test"))]
     }
+
+    @Unroll
+    def "test wallet equality"() {
+        expect:
+        a.wallet == b.wallet
+        where:
+        a|b
+        new Person().addToWallet(new TokenIdentifier(token: "test")) | new Person().addToWallet(new TokenIdentifier(token: "test"))
+    }
 }

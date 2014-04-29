@@ -88,6 +88,7 @@ class StandardizationProcessorSpec extends Specification {
                     contents: new JsonSlurper().parseText(sampleJson) as Map<String, Object>
             )
             addToWallet new NameIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: nameType,
                     name: new Name(
                             givenName: "Pat",
@@ -95,10 +96,12 @@ class StandardizationProcessorSpec extends Specification {
                     )
             )
             addToWallet new EmailAddressIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: emailType,
                     emailAddress: 'pat.lee@gmail.com'
             )
             addToWallet new TokenIdentifier(
+                    systemOfRecord: systemOfRecord,
                     type: networkIdentifierType,
                     token: 'pl53'
             )
