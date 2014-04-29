@@ -21,6 +21,7 @@ dependencies {
     compile project(":idmatch")
     compile project(":role")
     compile project(":notification")
+    compile project(":activation")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-jdbc")
     compile("org.springframework.boot:spring-boot-starter-security")

@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":service")
+    compile project(":model")
+}
