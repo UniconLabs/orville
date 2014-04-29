@@ -122,6 +122,9 @@ class Person {
 
     String getLastUpdatedDateAsUtcFormattedString() {
         //TODO: consider using javax.xml.bind.DatatypeConverter
+        //TODO: or even better perhaps use Groovy extension module for Date type-wide convenience method that encapsulates this UTC formatting
+        //as this is needed elsewhere e.g. AK.validThrough, etc.
+        // http://groovy.codehaus.org/Creating+an+extension+module
         this.lastUpdated.format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone('UTC'))
     }
 }
