@@ -58,7 +58,6 @@ class IdMatchService {
                 identifiers(person.tokenIdentifiers.collect {TokenIdentifier id -> ["type": id.type.value, "identifier": id.token]} + ["type": "sor", "identifier": sorId])
             }
             def path = "${serviceConfig.version}/people/${sor.toLowerCase()}/${sorId}"
-            println "here: ${builder.toPrettyString()}"
             def resp = restClient.put(
                     path: path,
                     body: builder.toString(),
