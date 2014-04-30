@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #Just for convenience during development - with externalized config properties
-gradle clean build; java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -jar web/build/libs/openregistry-web-2.0.0-M2.jar --debug --spring.config.location=file:/etc/openregistry/config/openregistry.properties
+gradle clean build; java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -jar web/build/libs/openregistry-web-2.0.0-RC1.jar --debug --spring.config.location=file:/etc/openregistry/config/openregistry.properties
