@@ -14,6 +14,7 @@ import org.apereo.openregistry.service.idmatch.IdMatchService
 import org.apereo.openregistry.service.persistence.PersistenceProcessor
 import org.apereo.openregistry.service.standardization.GuestRoleStandardizationProcessor
 import org.apereo.openregistry.service.standardization.GuestRoleStandardizationService
+import org.apereo.openregistry.service.standardization.GuestRoleUpdateStandardizationProcessor
 import org.apereo.openregistry.service.standardization.SimpleStandardizationService
 import org.apereo.openregistry.service.standardization.StandardizationProcessor
 import org.apereo.openregistry.service.notification.internal.HttpPutNotificationService
@@ -80,6 +81,7 @@ class Application extends SpringBootServletInitializer {
     OpenRegistryProcessor updateProcessor() {
         new CompositeOpenRegistryProcessor([
                 new UpdateStandardizationProcessor(),
+                new GuestRoleUpdateStandardizationProcessor(),
                 new PersistenceProcessor()
         ] as LinkedHashSet)
     }
