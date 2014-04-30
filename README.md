@@ -6,7 +6,39 @@ This software is in the development status.
 
 1. Download a release from https://github.com/UniconLabs/orville/releases
 2. Run `java -jar openregistry-web-{version}.jar`. *Note:* M2 requires that the system be run with an external configuration file as describe in the [Configuration](#configuration) section.
-3. post to http://localhost:8080/v1/sorPeople/test/
+3. Make an HTTP POST request to `http://localhost:8080/v1/sorPeople/test/` with the following test payload:
+
+```json
+{
+  "sorAttributes": {
+    "names": [
+      {
+        "type": "official",
+        "given": "John",
+        "family": "Doe"
+      }
+    ],
+    "emailAddresses": [
+      {
+        "address": "john.doe@gmail.com",
+        "type": "personal"
+      }
+    ],
+    "identifiers": [
+      {
+        "identifier": "jd76",
+        "type": "network"
+      }
+    ],
+    "sponsor": {
+      "identifier": "12345",
+      "type": "enterprise"
+    },
+    "roleEnds": "2014-08-04T12:00:00Z"
+  }
+}
+```
+
 
 ## Configuration
 
