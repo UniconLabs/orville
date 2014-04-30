@@ -28,7 +28,7 @@ class GuestRoleUpdateStandardizationProcessor implements OpenRegistryProcessor{
                 }
             }
             if (request.sorAttributes?.roleEnds) {
-                role.expiration = DatatypeConverter.parseDateTime((String)request.sorAttributes.roleEnds)
+                role.expiration = DatatypeConverter.parseDateTime((String)request.sorAttributes.roleEnds).time
             }
         }
 

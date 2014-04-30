@@ -152,8 +152,14 @@ class OpenRegistrySystemOfRecordDataResource {
             }
             sorRequestData["resource"] = "/v1/sorPeople/${sor}/${personSorId}"
             updateProcessor.process(new OpenRegistryProcessorContext(
-                    request: new Baggage(systemOfRecord: systemOfRecord, contents: sorRequestData, type: Type.findByTargetAndValue(Baggage, "update"))
+                    person: person,
+                    request: new Baggage(
+                            systemOfRecord: systemOfRecord,
+                            contents: sorRequestData,
+                            type: Type.findByTargetAndValue(Baggage, "update")
+                    )
             ))
+            return new ResponseEntity(HttpStatus.OK)
         }
     }
 
