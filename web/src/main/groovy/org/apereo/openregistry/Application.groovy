@@ -2,9 +2,11 @@ package org.apereo.openregistry
 
 import org.apereo.openregistry.model.*
 import org.apereo.openregistry.service.CompositeOpenRegistryProcessor
+import org.apereo.openregistry.service.IdOutcomeProcessor
 import org.apereo.openregistry.service.MockOutcomeProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessor
 import org.apereo.openregistry.service.OpenRegistryProcessorContext
+import org.apereo.openregistry.service.RoleCreationOutcomeProcessor
 import org.apereo.openregistry.service.RoleOutcomeProcessor
 import org.apereo.openregistry.service.identification.IdentificationProcessor
 import org.apereo.openregistry.service.identification.internal.RandomUUIDTokenGeneratorStrategy
@@ -71,7 +73,9 @@ class Application extends SpringBootServletInitializer {
                 new IdMatchProcessor(idMatchService: idMatchService),
                 new PersistenceProcessor(),
                 // new NotificationProcessor(new HttpPutNotificationService(notificationServiceConfigProperties)),
-                // new RoleOutcomeProcessor()
+                // new RoleOutcomeProcessor(),
+                new IdOutcomeProcessor(),
+                new RoleCreationOutcomeProcessor()
         ] as LinkedHashSet
 
         new CompositeOpenRegistryProcessor(pipeline)
