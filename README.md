@@ -1,12 +1,14 @@
 # Open Registry 2
 
-This software is in the development status.
+Curent version is `2.0.0-RC2`
 
-## Running the stand-alone jar
+## Running the stand-alone war and making a sample RESTful request
 
-1. Download a release from https://github.com/UniconLabs/orville/releases
-2. Run `java -jar openregistry-web-{version}.jar`. *Note:* M2 requires that the system be run with an external configuration file as describe in the [Configuration](#configuration) section.
-3. Make an HTTP POST request to `http://localhost:8080/v1/sorPeople/test/` with the following test payload:
+A sample configuration file is available at https://github.com/UniconLabs/orville/blob/master/web/src/main/resources/application.properties. To configure the application, download the file and modify as needed (change idMatch configuration, change database configuration, etc) and put this file into an external file system location e.g. `/path/to/config/openregistry.properties` 
+
+1. Download the latest release from https://github.com/UniconLabs/orville/releases
+3. Run `java -jar orville-{version}.war --spring.config.location=file:/path/to/config/openregistry.properties`. 
+4. Make an HTTP POST request to `http://localhost:8080/v1/sorPeople/test/` with the following test payload:
 
 ```json
 {
@@ -37,14 +39,6 @@ This software is in the development status.
     "roleEnds": "2014-08-04T12:00:00Z"
   }
 }
-```
-
-
-## Configuration
-
-A sample configuration file is available at https://github.com/UniconLabs/orville/blob/master/web/src/main/resources/application.properties. To configure the application, download the file and modify as needed (change idMatch configuration, change database configuration, etc). To run the application with the new configuration, run
-```
-java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/config/openregistry.properties
 ```
 
 ## Security
