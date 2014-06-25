@@ -50,7 +50,7 @@ java -jar openregistry-web-{version}.jar --spring.config.location=file:/path/to/
 ## Security
 
 The HTTP Basic Auth security for Orville REST endpoints is enabled by default. Without providing a valid username:password base64 encoded value
-in HTTP `Authorization` header while invoking Orvile HTTP resources, the server will return an HTTP `401` error code.
+in HTTP `Authorization` header while invoking Orville HTTP resources, the server will return an HTTP `401` error code.
 
 The configuration is controlled by the following properties
 (either in the classpath `application.properties` or an externalized properties file as described above):
@@ -63,6 +63,13 @@ security.user.password=user
 In the `application.properties` included in the classpath, username `user`, and password `user` is used.
 Adjust these with more robust username/password values as necessary.
 
-## Database backend
+## External servlet container deployment
 
-**Note:** Currently only the H2 database is supported
+Orville could be built and deployed to external Servlet containers supporting Servlet v3 spec. e.g. Tomcat7+ as a regular `war` deployment artifact.
+In order to use this deployment model, first set the `SPRING_CONFIG_LOCATION` OS environment variable pointing to the orville's externalized properties file
+e.g. `export SPRING_CONFIG_LOCATION=file:/path/to/config/openregistry.properties`
+
+To build the war file, from the root of the project just run `./gradlew clean build` The resultant war file will be built and available in
+`web/build/libs/` subdirectory. Once it's built, simply deploy it to any Servlet v3 container of choice.
+
+> NOTE: Orville external war deployment has been tested in Tomcat 7.0.42
